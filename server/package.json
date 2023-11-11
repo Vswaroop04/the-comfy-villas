@@ -38,8 +38,6 @@
 		"helmet": "^7.0.0",
 		"ioredis": "^5.3.2",
 		"moment": "^2.29.4",
-		"mongodb": "^6.2.0",
-		"mongoose": "^8.0.0",
 		"morgan": "^1.10.0",
 		"node-fetch": "^3.3.2",
 		"nodemailer": "^6.9.7",
@@ -66,6 +64,7 @@
 		"@types/useragent": "^2.3.3",
 		"esbuild": "^0.17.18",
 		"nodemon": "^2.0.22",
+		"prisma": "^5.5.2",
 		"regenerator-runtime": "^0.13.11",
 		"ts-node": "^10.9.1",
 		"tsconfig-paths": "^4.2.0",
@@ -73,5 +72,5 @@
 	},
 	"engines": {
 		"node": ">=18.18.0 <19.0.0"
-	  }
+	}
 }
