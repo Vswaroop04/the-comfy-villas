@@ -10,17 +10,66 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum userRoles {
+  Admin
+  Resident
+}
+
 model User {
-  id        String   @id @default(cuid())
-  name      String?  
-  email     String?  @unique
-  type      String?   
-  password  String?
-  phone    Int?   @unique
+  id       String    @id @default(cuid())
+  name     String?
+  email    String?   @unique
+  role     userRoles @default(Resident)
+  password String?
+  phone    Int?      @unique
+  ratings  Ratings[]
+  reviews Reviews[]
 }
 
 model Listing {
-  villaid  String   @id @default(cuid())
-  rank Int
-  
+  id           String   @id @default(cuid())
+  name          String
+  rank              Int      @default(autoincrement())
+  fullImageUrl      String?
+  thumbnailImageUrl String?
+  Beds              Int?
+  Bathrooms         Int?
+  Price             Float?
+  amenities         String[]
+  location          String?
+  ratings           Ratings[]
+  reviews           Reviews[]
+  appointments      Appointments[]
 }
+
+model Ratings {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+  listingId        String
+  listing          Listing  @relation(fields: [listingId], references: [id])
+  amenitiesRatings Float
+  managementRatings Float
+  serviceRatings   Float
+}
+
+model Reviews {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+  listingId        String
+  listing          Listing  @relation(fields: [listingId], references: [id])
+  review  String
+
+}
+
+
+model Appointments {
+  id       String    @id @default(cuid())
+  name     String?
+  email    String?   @unique
+  phone    Int?      @unique
+  listingId        String
+  listing          Listing  @relation(fields: [listingId], references: [id])
+}
+

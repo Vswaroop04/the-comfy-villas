@@ -11,9 +11,7 @@ app.use(router);
 app.use(errorHandler);
 
 async function main() {
-	const user = await prisma.user.create({
-		data: { name: 'Vishnu', phone: 1245, email: 'vswaroop04f@gmail.com', type : 'user', password : 'vishnu2003' },
-	});
+	const user = await prisma.user.deleteMany({});
 	console.log(user);
 	app.listen(port, async () => {
 		console.log(`The app listening on port ${port}`);
