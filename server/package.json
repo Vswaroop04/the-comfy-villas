@@ -29,6 +29,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@prisma/client": "5.5.2",
+		"cloudinary": "^1.41.0",
 		"connect-redis": "^7.1.0",
 		"cookie-parser": "^1.4.6",
 		"cors": "^2.8.5",

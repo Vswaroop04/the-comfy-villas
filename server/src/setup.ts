@@ -5,7 +5,15 @@ import express, { Express } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import nodemailer from 'nodemailer';
+import {v2 as cloudinary} from 'cloudinary';
+          
 require('dotenv').config();
+
+cloudinary.config({ 
+	cloud_name: process.env.CLOUD_NAME, 
+	api_key: process.env.CLOUD_API_KEY, 
+	api_secret: process.env.CLOUD_API_SECRET 
+  });
 
 const corsOptions: cors.CorsOptions = {
 	origin: [

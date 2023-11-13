@@ -4,6 +4,8 @@ import router from '@/routes/router';
 import errorHandler from './middleware/errorHandler';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
+// import {v2 as cloudinary} from 'cloudinary';
+
 const port = process.env.PORT || 5000;
 
 app.use(session);
@@ -11,8 +13,11 @@ app.use(router);
 app.use(errorHandler);
 
 async function main() {
-	const user = await prisma.user.deleteMany({});
-	console.log(user);
+	// const result = await cloudinary.uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg", {
+	// 	folder: "your_folder_name", // Optional: specify a folder name
+	// 	// Optionally add other upload options (e.g., transformations)
+	//   });
+	//   console.log(result);
 	app.listen(port, async () => {
 		console.log(`The app listening on port ${port}`);
 	});
