@@ -4,7 +4,6 @@ import cors from 'cors';
 import express, { Express } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import nodemailer from 'nodemailer';
 import {v2 as cloudinary} from 'cloudinary';
           
 require('dotenv').config();

@@ -21,7 +21,7 @@ model User {
   email    String?   @unique
   role     userRoles @default(Resident)
   password String?
-  phone    Int?      @unique
+  phone    String?      @unique
   ratings  Ratings[]
   reviews Reviews[]
 }
