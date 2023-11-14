@@ -1,61 +1,8 @@
 import prisma from '@/database/prismaClient';
-import { signupSchema, loginSchema } from './_validator';
+import {loginSchema } from './_validator';
 import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 
-export async function signUpController(
-	req: Request,
-	res: Response,
-	next: NextFunction
-) {
-	try {
-		const result = signupSchema.parse(req.body);
-		//hashing password
-		const hashedPassword = await bcrypt.hash(result.password, 10);
-		//checking if user already exists
-		const existingUser = await prisma.user.findUnique({
-			where: {
-				email: result.email,
-			},
-		});
-
-		if (existingUser) {
-			return res
-				.status(409)
-				.json({ message: 'User already exists, please login.' });
-		}
-		// inserting into user table
-		const user = await prisma.user.create({
-			data: {
-				name: result.name,
-				email: result.email,
-				password: hashedPassword,
-				phone: result.phone,
-			},
-		});
-		// intializing session
-		req.session.user = {
-			id: user.id || '',
-			email: user.email || '',
-			name: user.name || '',
-			phone: user.phone || '',
-			role: user.role || '',
-		};
-
-		res.status(201).json({
-			message: 'Signup successful',
-			user: {
-				id: user.id || '',
-				email: user.email || '',
-				name: user.name || '',
-				phone: user.phone || '',
-				role: user.role || '',
-			},
-		});
-	} catch (err) {
-		next(err);
-	}
-}
 export async function loginController(
 	req: Request,
 	res: Response,
@@ -63,6 +10,30 @@ export async function loginController(
 ) {
 	try {
 		const result = loginSchema.parse(req.body);
+
+		if(result.email == process.env.ADMIN_MAIL){
+			if(result.password !== process.env.ADMIN_PASSWORD){
+				return res.status(401).json({ message: 'Invalid email or password' });
+			}
+			req.session.user = {
+				id: "cloynsd9qadmi9qsewupqe1p",
+				email:  process.env.ADMIN_MAIL,
+				name: "Admin",
+				phone: '9494563120',
+				role: 'Admin',
+			};
+	
+			return res.status(200).json({
+				message: 'Login successful',
+				user: {
+					id: "pjndn3yonxyelac-c3",
+					email:  process.env.ADMIN_MAIL,
+					name: "Admin",
+					phone: '9494563120',
+					role: 'Admin',
+				},
+			});
+		}
 
 		// Check user
 		const user = await prisma.user.findUnique({
@@ -133,29 +104,4 @@ export async function logoutController(
 	}
 }
 
-export async function deleteUserController(
-	req: Request,
-	res: Response,
-	next: NextFunction
-) {
-	try {
-		const userId = req.session.user?.id; // assuming the user's ID is stored in the session
-		if (!userId) {
-			return res.status(401).json({ message: 'User not authenticated' });
-		}
 
-		await prisma.user.delete({
-			where: { id: userId },
-		});
-
-		// Clearing the session after deletion
-		req.session.user = undefined;
-
-		res
-			.status(200)
-			.header('Cache-Control', 'no-cache, no-store, must-revalidate')
-			.json({ message: 'User deleted successfully' });
-	} catch (err) {
-		next(err);
-	}
-}

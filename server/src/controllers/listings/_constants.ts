@@ -1,0 +1,15 @@
+export const RETURN_FILTER = {
+	id: true,
+	name: true,
+	rank: true,
+	fullImageUrl: true,
+	thumbnailImageUrl: true,
+	Beds: true,
+	Bathrooms: true,
+	Price: true,
+	amenities: true,
+	location: true,
+	ratings: true,
+	reviews: true,
+	appointments: true,
+};
