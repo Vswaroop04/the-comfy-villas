@@ -19,6 +19,8 @@ import "swiper/css/keyboard";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/virtual";
+import useResponsive from "@/hooks/useResponsive";
+
 
 export const Carousal: React.FC<{
   Slides: { SlideJSX: React.ComponentType<any>; props?: Record<string, any> }[];
@@ -33,6 +35,8 @@ export const Carousal: React.FC<{
   className,
   swiperSliderClassName,
 }) => {
+    const isLg = useResponsive('lg');
+  console.log(isLg)
   return (
     <Swiper
       modules={[

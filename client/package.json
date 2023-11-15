@@ -14,6 +14,7 @@
     "@tanstack/react-query": "^5.8.1",
     "@tanstack/react-query-devtools": "^5.8.1",
     "clsx": "^2.0.0",
+    "http": "0.0.1-security",
     "jotai": "^2.5.1",
     "jotai-devtools": "^0.7.0",
     "lucide-react": "^0.292.0",

@@ -11,7 +11,7 @@ const Slide2 = () => {
           src="/assets/carousel/slide2.jpg"
           alt=""
           width={1600}
-          height={500}
+          height={550}
           priority
           className="h-full w-full -scale-x-100 object-cover"
         />

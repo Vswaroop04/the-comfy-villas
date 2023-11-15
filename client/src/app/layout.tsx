@@ -6,6 +6,7 @@ import { QCOptions, SEO } from "@/config/_index";
 import Head from "next/head";
 import { useState } from "react";
 import { Provider } from "jotai";
+import ResponsiveInit from "@/lib/providers/ResponsiveInit";
 import {
   DehydratedState,
   QueryClient,
@@ -31,6 +32,7 @@ export default function RootLayout({
     <>
       <QueryClientProvider client={queryClient}>
         <Provider>
+          <ResponsiveInit />
           <Head>
             <meta
               name="viewport"
