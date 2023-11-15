@@ -11,7 +11,7 @@ import {
 } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SwiperOptions } from "swiper/types";
-import { cn } from "@/lib/utils";
+import { cn } from "../../utils";
 import "swiper/css";
 import "swiper/css/a11y";
 import "swiper/css/autoplay";

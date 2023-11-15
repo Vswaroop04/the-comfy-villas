@@ -1,5 +1,5 @@
 import tailwindConfig from '@/../tailwind.config';
-import { OGresponsiveAtom } from '@/lib/store/responsive';
+import { OGresponsiveAtom } from '../../store/responsive';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import resolveConfig from 'tailwindcss/resolveConfig';

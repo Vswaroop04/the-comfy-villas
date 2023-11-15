@@ -1,6 +1,7 @@
 export default interface TUser {
-	userName: string;
+	id: string;
+	name: string;
 	email: string;
-	mobileNumber: number;
-	type: string;
+	phone: string;
+	role: string;
 }

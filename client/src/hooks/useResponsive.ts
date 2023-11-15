@@ -1,4 +1,4 @@
-import { responsiveAtom } from '@/lib/store/responsive';
+import { responsiveAtom } from '../store/responsive';
 import { useAtomValue } from 'jotai';
 
 export default function useResponsive(keys: 'sm' | 'md' | 'lg' | 'xl' | '2xl') {
