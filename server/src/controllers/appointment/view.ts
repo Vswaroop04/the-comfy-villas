@@ -7,7 +7,7 @@ export async function getAllAppointments(req: Request, res: Response, next: Next
         const appointments = await prisma.appointments.findMany();
 
         // Send them as a response
-        res.status(200).json(appointments);
+        res.status(200).json({data : appointments});
     } catch (error) {
         // Handle possible errors
         next(error);

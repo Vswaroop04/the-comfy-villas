@@ -17,7 +17,7 @@ export async function addListingController(
 	
 		res.status(201).json({
 			message: 'Listing Added Successfully',
-            lisitng : newListing
+            listing : newListing
 		});
 	} catch (err) {
 		next(err);

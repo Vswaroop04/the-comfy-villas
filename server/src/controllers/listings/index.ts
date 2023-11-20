@@ -18,7 +18,7 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 				where: { id },
 				select: returnFilter,
 			});
-			return res.json(listing);
+			return res.json({data : listing});
 		}
 
 		// Build the where condition for searchText
@@ -28,7 +28,7 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 				where,
 				select: returnFilter,
 			});
-			return res.json(listings);
+			return res.json({data : listings});
 		}
 		// Set default values for page and limit
 		page = page || 1;
