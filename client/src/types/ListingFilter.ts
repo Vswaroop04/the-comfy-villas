@@ -1,4 +1,7 @@
- type TListingFilter = {
+import { TImage } from "./Listing";
+
+
+type TListingFilter = {
   id?: string;
   page?: number;
   limit?: number;
@@ -10,21 +13,18 @@
 };
 
 export type TListingFilterWithID = {
-	id : string;
+  id: string;
 } & TListingFilter;
-
 
 export type TListingFilterWithSearchText = {
-	searchText : string;
+  searchText: string;
 } & TListingFilter;
-
 
 export type ListingReturnFilter = {
   id?: boolean;
   name?: boolean;
-  fullImageUrl?: boolean;
-  thumbnailImageUrl?: boolean;
-  Beds?: boolean;
+  images: TImage[];
+  beds?: boolean;
   Bathrooms?: boolean;
   Price?: boolean;
   amenities?: boolean;
@@ -33,10 +33,8 @@ export type ListingReturnFilter = {
   reviews?: boolean;
 };
 
-export type TListingReturnFilter<T extends 'res' | 'req'> = T extends 'res'
+export type TListingReturnFilter<T extends "res" | "req"> = T extends "res"
   ? Partial<ListingReturnFilter>
   : Partial<Record<keyof ListingReturnFilter, false | 0 | true>>;
 
-
 export default TListingFilter;
-

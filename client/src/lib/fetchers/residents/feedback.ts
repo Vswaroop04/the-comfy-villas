@@ -10,7 +10,7 @@ export default async function feedbackResident(
   message: string;
 }> {
   const responseData = await httpClient({
-    url: `/resident/delete`,
+    url: `/resident/feedback`,
     method: "POST",
     isCustomUrl: false,
     body: JSON.stringify(content),

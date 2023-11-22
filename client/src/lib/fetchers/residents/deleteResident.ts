@@ -10,7 +10,7 @@ export default async function deleteResident(
   message: string;
 }> {
   const responseData = await httpClient({
-    url: `/resident/feedback`,
+    url: `/resident/delete`,
     method: "POST",
     isCustomUrl: false,
     body: JSON.stringify(content),

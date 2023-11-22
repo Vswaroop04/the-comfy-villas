@@ -44,7 +44,6 @@ export const Carousal: React.FC<{
         Autoplay,
         Keyboard,
         Mousewheel,
-        Navigation,
         Pagination,
         Scrollbar,
         Virtual,
@@ -52,10 +51,6 @@ export const Carousal: React.FC<{
       keyboard={{
         enabled: true,
         onlyInViewport: true,
-      }}
-      navigation={{
-        nextEl: ".swiper-nxt",
-        prevEl: ".swiper-pre",
       }}
       a11y={{
         enabled: true,
@@ -67,6 +62,7 @@ export const Carousal: React.FC<{
         releaseOnEdges: true,
         forceToAxis: true,
       }}
+      pagination={{ clickable: true }}
       speed={600}
       autoplay={{
         delay: 10000,
@@ -80,7 +76,7 @@ export const Carousal: React.FC<{
         <SwiperSlide
           key={`${Date.now() + Math.random()}${index}`}
           virtualIndex={index}
-          className={cn(swiperSliderClassName)}
+          className={cn('h-{450} w-full')}
         >
           <SlideJSX {...props} />
         </SwiperSlide>

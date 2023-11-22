@@ -1,23 +1,28 @@
 export interface TAddListingRequest {
   name: string;
-  Beds: number;
-  Bathrooms: number;
-  Price: number;
-  fullImageUrl: string;
-  thumbnailImageUrl: string;
+  beds: number;
+  bathrooms: number;
+  price: number;
+  images: TImage[];
   amenities?: string[];
   location: string;
+}
+
+export interface TImage {
+  fullImageUrl: string;
+  thumbnailImageUrl: string;
+
 }
 
 export interface TAddListingResponse {
   id: string;
   name: string;
   rank: number;
-  fullImageUrl: string;
-  thumbnailImageUrl: string;
-  Beds: number;
-  Bathrooms: number;
-  Price: number;
+  images: TImage[];
+
+  beds: number;
+  bathrooms: number;
+  price: number;
   amenities: string[];
   location: string;
   createdAt: string;
@@ -27,11 +32,11 @@ export interface TAddListingResponse {
 export interface TEditListingRequest {
   id: string;
   name?: string;
-  Beds?: number;
-  Bathrooms?: number;
-  Price?: number;
-  fullImageUrl?: string;
-  thumbnailImageUrl?: string;
+  beds?: number;
+  bathrooms?: number;
+  price?: number;
+  images: TImage[];
+
   amenities?: string[];
   location?: string;
 }
@@ -40,11 +45,11 @@ export interface TEditListingResponse {
   id: string;
   name: string;
   rank: number;
-  fullImageUrl: string;
-  thumbnailImageUrl: string;
-  Beds: number;
-  Bathrooms: number;
-  Price: number;
+  images: TImage[];
+
+  beds: number;
+  bathrooms: number;
+  price: number;
   amenities: string[];
   location: string;
   createdAt: string;
