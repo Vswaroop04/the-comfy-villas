@@ -18,6 +18,9 @@ export async function createAppointment(
 						email: validatedData.email,
 					},
 					{
+						phone: validatedData.phone,
+					},
+					{
 						listingId: validatedData.listingId,
 					},
 				],
@@ -70,10 +73,10 @@ export async function createAppointment(
             <p><strong>Name:</strong> ${validatedData.name}</p>
             <p><strong>Email:</strong> ${validatedData.email}</p>
             <p><strong>Phone:</strong> ${validatedData.phone}</p>
-            <p><strong> <ul>Listing Interested In:</strong></ul></p>
-            <p><strong>Listing Name:</strong> ${listingExists.name}</p>
-			<p><strong>Listing Id:</strong> ${listingExists.id}</p>
-			<p><strong>Listing Price:</strong> ${listingExists.price}</p>
+            <p><strong>Listing Interested In:</strong></p>
+            <p><strong>     Listing Name:</strong> ${listingExists.name}</p>
+			<p><strong>     Listing Id:</strong> ${listingExists.id}</p>
+			<p><strong>     Listing Price:</strong> ${listingExists.price}</p>
             <p>Please follow up on this appointment at your earliest convenience.</p>
             <p>Best Regards,</p>
             <p>Your Automated Notification System</p>

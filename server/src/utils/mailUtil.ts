@@ -3,7 +3,7 @@ const config = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
 		user: 'noreply.emailhtt@gmail.com',
-		pass: 'ppmj gxyw alih bukz',
+		pass: process.env.MAIL_PASS,
 	},
 });
 
@@ -15,7 +15,7 @@ export default async function sendMailUtil(
 ) {
 	let mailOptions2 = {
 		from: 'noreply.emailhtt@gmail.com',
-		to: admin ? 'vswaroop04@gmail.com' : toMail,
+		to: admin ? ['vswaroop04@gmail.com', 'ayyalasomayajula2000@gmail.com'] : toMail,
 		subject: sub,
 		html: mailBody,
     };

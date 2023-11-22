@@ -67,10 +67,13 @@ model Reviews {
 model Appointments {
   id       String    @id @default(cuid())
   name     String?
-  email    String?   @unique
-  phone    String?      @unique
+  email    String?   
+  phone    String?     
   listingId        String
   listing          Listing  @relation(fields: [listingId], references: [id],  onDelete: Cascade)
+
+    @@unique([email, phone, listingId])
+
 }
 
 model  Image {

@@ -3,7 +3,7 @@ import session from '@/utils/sessionStore';
 import router from '@/routes/router';
 import errorHandler from './middleware/errorHandler';
 import prisma from './database/prismaClient';
-import updateListingRanks from './utils/scripts/rankCaluculation';
+import updateListingRanks from './scripts/rankCaluculation';
 import schedule from 'node-schedule';
 const port = process.env.PORT || 5000;
 
