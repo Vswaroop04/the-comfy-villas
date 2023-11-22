@@ -37,8 +37,8 @@ export default function Gallery() {
 
   return (
     <div className={`grid ${isLg ? 'grid-cols-3' : 'grid-cols-1'} gap-4 p-4`}>
-     <div className="absolute bottom-0 left-0 right-0 px-4 py-2 bg-black-800 opacity-70 rounded-sm">
-            <h3 className="text-xl text-white font-bold">
+     <div className="absolute bottom-0 left-0 right-0 px-4 py- opacity-70 rounded-sm">
+            <h3 className="text-xl text-white">
                 Hey, I Am The Big Boss</h3>
             <p className="mt-2 text-sm text-gray-300">Some description text. Some dummy text here. Welcome to Tvk.dev.
             </p>

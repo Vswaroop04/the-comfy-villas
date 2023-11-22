@@ -11,7 +11,6 @@ import {
 } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SwiperOptions } from "swiper/types";
-import { cn } from "../../utils";
 import "swiper/css";
 import "swiper/css/a11y";
 import "swiper/css/autoplay";
@@ -19,10 +18,8 @@ import "swiper/css/keyboard";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/virtual";
-import useResponsive from "@/hooks/useResponsive";
 
-
-export const Carousal: React.FC<{
+export const CarouselComponent: React.FC<{
   Slides: { SlideJSX: React.ComponentType<any>; props?: Record<string, any> }[];
   enableNavButton?: boolean;
   options?: Partial<SwiperOptions>;
@@ -35,8 +32,6 @@ export const Carousal: React.FC<{
   className,
   swiperSliderClassName,
 }) => {
-    const isLg = useResponsive('lg');
-  console.log(isLg)
   return (
     <Swiper
       modules={[
@@ -69,19 +64,24 @@ export const Carousal: React.FC<{
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
       }}
-      {...options}
-      className={cn("relative h-full w-full", className)}
+      className="h-[75vh]"
     >
-      {Slides?.map(({ SlideJSX, props }, index) => (
-        <SwiperSlide
-          key={`${Date.now() + Math.random()}${index}`}
-          virtualIndex={index}
-          className={cn('h-{450} w-full')}
-        >
-          <SlideJSX {...props} />
-        </SwiperSlide>
-      ))}
+      <div className="pb-1100">
+        {Slides?.map(({ SlideJSX, props }, index) => (
+          <SwiperSlide
+            key={`${Date.now() + Math.random()}${index}`}
+            virtualIndex={index}
+            className="relative bg-cover bg-center"
+            style={{
+              backgroundImage: "url(/assets/carousel/slide3.jpg)",
+              marginBottom: "80%",
+            }}
+          >
+            <SlideJSX {...props} />
+          </SwiperSlide>
+        ))}
+      </div>
+      {/* Repeat SwiperSlide for as many slides as you have */}
     </Swiper>
   );
 };
-
