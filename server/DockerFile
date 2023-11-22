@@ -1,0 +1,41 @@
+FROM node:20-alpine AS base
+
+WORKDIR /app
+
+
+COPY package*.json ./
+RUN npm install -g pnpm && pnpm i
+
+
+FROM base AS dev
+
+
+COPY . .
+
+
+ENV PORT=3000
+RUN export $(cat .env | xargs)
+
+RUN pnpm prisma db push
+
+CMD [ "pnpm", "run", "dev" ]
+
+
+FROM base AS prod
+
+
+COPY . .
+
+
+ENV PORT=3000
+RUN export $(cat .env | xargs)
+
+
+RUN pnpm prisma db push
+RUN pnpm run build
+
+
+CMD [ "pnpm", "run" , "start"]
+
+
+EXPOSE $PORT
