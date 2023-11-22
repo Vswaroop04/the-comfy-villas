@@ -1,8 +1,7 @@
 import prisma from '@/database/prismaClient';
 import { deleteListingValidator } from './_validator';
 import { NextFunction, Request, Response } from 'express';
-import bcrypt from 'bcrypt';
-
+import listingDetails from '@/utils/listingValidCheck';
 
 export async function deleteListingController(
 	req: Request,
@@ -10,8 +9,11 @@ export async function deleteListingController(
 	next: NextFunction
 ) {
 	try {
-		const {id } = deleteListingValidator.parse(req.body);
-
+		const { id } = deleteListingValidator.parse(req.body);
+		let listing = listingDetails(id)
+		if (!listing) {
+			return res.status(404).json({ error: "Lisitng Not Found." });
+		}
 		await prisma.listing.delete({
 			where: { id },
 		});

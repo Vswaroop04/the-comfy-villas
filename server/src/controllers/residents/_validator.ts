@@ -5,6 +5,7 @@ export const residentSchema = z.object({
 	email: z.string().email(),
 	password: z.string(),
 	phone: z.string(),
+	listingId : z.string()
 });
 
 export const deleteResidentSchema = z.object({

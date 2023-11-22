@@ -36,7 +36,7 @@ export async function loginController(
 		}
 
 		// Check user
-		const user = await prisma.user.findUnique({
+		const user = await prisma.resident.findUnique({
 			where: {
 				email: result.email,
 			},
@@ -61,7 +61,6 @@ export async function loginController(
 			email: user.email || '',
 			name: user.name || '',
 			phone: user.phone || '',
-			role: user.role || '',
 		};
 
 		res.status(200).json({
@@ -71,7 +70,6 @@ export async function loginController(
 				email: user.email || '',
 				name: user.name || '',
 				phone: user.phone || '',
-				role: user.role || '',
 			},
 		});
 	} catch (err) {

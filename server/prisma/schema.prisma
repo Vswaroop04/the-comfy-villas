@@ -1,6 +1,5 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,46 +9,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum userRoles {
-  Admin
-  Resident
-}
-
-model User {
-  id       String    @id @default(cuid())
-  name     String?
-  email    String?   @unique
-  role     userRoles @default(Resident)
-  password String?
-  phone    String?      @unique
-  ratings  Ratings[]
-  reviews Reviews[]
-}
 
 model Listing {
   id                String      @id @default(cuid())
   name              String
   rank              Int         @default(autoincrement())
-  fullImageUrl      String?
-  thumbnailImageUrl String?
-  Beds              Int?
-  Bathrooms         Int?
-  Price             Float?
+  images            Image[]
+  beds              Int?
+  bathrooms         Int?
+  price             Float?
   amenities         String[]
   location          String?
-  ratings           Ratings[]
+  ratings           Ratings[] 
   reviews           Reviews[]
   appointments      Appointments[]
+  resident          Resident[]   
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
 }
+model Resident {
+  id       String    @id @default(cuid())
+  name     String?
+  email    String?   @unique
+  password String?
+  phone    String?      @unique
+  ratings  Ratings[]
+  reviews Reviews[]
+  listingId        String
+  listing          Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+}
+
 
 model Ratings {
   id               String   @id @default(cuid())
   userId           String
-  user             User     @relation(fields: [userId], references: [id])
+  user             Resident     @relation(fields: [userId], references: [id])
   listingId        String
-  listing          Listing  @relation(fields: [listingId], references: [id])
+  listing          Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
   amenitiesRatings Float
   managementRatings Float
   serviceRatings   Float
@@ -59,9 +56,9 @@ model Ratings {
 model Reviews {
   id               String   @id @default(cuid())
   userId           String
-  user             User     @relation(fields: [userId], references: [id])
+  user             Resident     @relation(fields: [userId], references: [id])
   listingId        String
-  listing          Listing  @relation(fields: [listingId], references: [id])
+  listing          Listing  @relation(fields: [listingId], references: [id] , onDelete: Cascade)
   review  String
 
 }
@@ -73,6 +70,13 @@ model Appointments {
   email    String?   @unique
   phone    String?      @unique
   listingId        String
-  listing          Listing  @relation(fields: [listingId], references: [id])
+  listing          Listing  @relation(fields: [listingId], references: [id],  onDelete: Cascade)
 }
 
+model  Image {
+  id String     @id @default(cuid())
+  fullImageUrl      String?
+  thumbnailImageUrl String?
+  listingId        String
+  listing          Listing  @relation(fields: [listingId], references: [id],  onDelete: Cascade)
+}

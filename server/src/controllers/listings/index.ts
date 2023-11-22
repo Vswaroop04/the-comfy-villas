@@ -9,6 +9,11 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 		if (!returnFilter) {
 			returnFilter = RETURN_FILTER;
 		}
+		if (req.session.user?.email != process.env.ADMIN_MAIL) {
+			const { ratings, reviews, appointments, ...filteredReturnFilter } =
+				RETURN_FILTER;
+			returnFilter = filteredReturnFilter;
+		}
 
 		let { id, page, limit, searchText, sort } = filter;
 
@@ -18,7 +23,7 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 				where: { id },
 				select: returnFilter,
 			});
-			return res.json({data : listing});
+			return res.json({ data: listing });
 		}
 
 		// Build the where condition for searchText
@@ -28,7 +33,7 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 				where,
 				select: returnFilter,
 			});
-			return res.json({data : listings});
+			return res.json({ data: listings });
 		}
 		// Set default values for page and limit
 		page = page || 1;
@@ -39,7 +44,7 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 		let orderBy = {};
 		if (sort) {
 			orderBy = {
-				...(sort.price && { Price: sort.price === 1 ? 'asc' : 'desc' }),
+				...(sort.price && { price: sort.price === 1 ? 'asc' : 'desc' }),
 				...(sort.date && { createdAt: sort.date === 1 ? 'asc' : 'desc' }),
 			};
 		}
@@ -65,4 +70,4 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 	}
 }
 
-export default filter
+export default filter;
