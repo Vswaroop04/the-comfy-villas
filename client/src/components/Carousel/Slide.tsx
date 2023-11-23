@@ -25,11 +25,11 @@ const Slide1 = () => {
         </>
       ) : (
         <>  {" "}
-          <div className="absolute text-white text-2xl font-bold p-8 bottom-14 left-5">
+          <div className="absolute text-white text-3xl font-bold p-10 top-60 left-5">
             Discover Extraordinary
           </div>
           <div
-            className="absolute text-white text-2xl font-bold p-8 bottom-2 left-5
+            className="absolute text-white text-3xl font-bold p-8 top-80 left-10
           "
           >
             Comfort Villas{" "}
