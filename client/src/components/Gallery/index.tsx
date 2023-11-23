@@ -1,4 +1,3 @@
-import React from "react";
 import ImageComponent1, {
   ImageComponent2,
   ImageComponent3,
