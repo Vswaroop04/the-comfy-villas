@@ -2,6 +2,7 @@ import Image from "next/image";
 import Carousel from "@/components/Carousel";
 import Gallery from "@/components/Gallery";
 import Navbar from "@/components/Navbar";
+import Footer from '@/components/Footer'
 import { NextSeo } from "next-seo";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
         <Navbar />
         <Carousel />
         <Gallery />
+        <Footer/>
       </>
     </>
   );

@@ -31,7 +31,7 @@ const galleryItems = [
 
 export const ImageComponent1 = () => {
   return (
-    <div className="relative max-w-full rounded-lg ml-10">
+    <div className="relative max-w-full rounded-lg ml-5">
       <Image
         src={galleryItems[0].imageSrc}
         alt="Gallery image"

@@ -8,7 +8,7 @@ import ImageComponent1, {
 
 const GalleryComponent = () => {
   return (
-    <div className="m-11 rounded-lg px-20 bg-slate-50 py-5">
+    <div className=" rounded-lg px-20 bg-slate-50 py-5">
       <div className="grid grid-cols-3 grid-rows-2 gap-0">
         <div className="col-span-1 row-span-2 p-0 m-0 hover:scale-105 ">
           <ImageComponent1 />
