@@ -53,7 +53,7 @@ export type ListingReturnFilter = {
   location?: string;
   ratings?: TRatings[];
   reviews?: TReviews[];
-  averageRating?: string;
+  averageRating?: number;
   appointments?: TAppointment[];
 };
 

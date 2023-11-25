@@ -25,7 +25,7 @@ const OffersGridComponent = ({ offers }: any) => {
             <CardComponent
               key={offer.id}
               title={offer.title}
-              subtitle="villa"
+              subtitle="Villa"
               location={offer.location}
               price={offer.price}
               rating={offer.averageRating}

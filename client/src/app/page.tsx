@@ -22,8 +22,6 @@ export default async function Home() {
   console.log("making request");
 
   const offers = await getFilteredListings(filter);
-  console.log(offers);
-
   // Ensure that the offers match the expected type
   const formattedOffers = offers.data.map((offer: any) => ({
     id: offer.id,
@@ -33,7 +31,6 @@ export default async function Home() {
     averageRating: offer.averageRating,
     images: offer.images,
   }));
-  console.log(formattedOffers);
   return (
     <>
       <>
