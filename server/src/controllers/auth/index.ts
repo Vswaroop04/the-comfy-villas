@@ -9,7 +9,9 @@ export async function loginController(
 	next: NextFunction
 ) {
 	try {
+		console.log(req.body)
 		const result = loginSchema.parse(req.body);
+
 
 		if(result.email == process.env.ADMIN_MAIL){
 			if(result.password !== process.env.ADMIN_PASSWORD){

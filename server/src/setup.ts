@@ -28,7 +28,7 @@ const app: Express = express();
 
 // parse application/x-www-form-urlencoded
 app.use(helmet());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('dev'));
