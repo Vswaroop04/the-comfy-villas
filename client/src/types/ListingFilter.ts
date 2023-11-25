@@ -1,6 +1,5 @@
 import { TImage } from "./Listing";
 
-
 type TListingFilter = {
   id?: string;
   page?: number;
@@ -20,17 +19,42 @@ export type TListingFilterWithSearchText = {
   searchText: string;
 } & TListingFilter;
 
+interface TRatings {
+  id?: string;
+  userId?: string;
+  listingId?: string;
+  amenitiesRatings?: number;
+  managementRatings?: number;
+  serviceRatings?: number;
+  totalRating?: number;
+}
+interface TReviews {
+  id?: string;
+  userId?: string;
+  listingId?: string;
+  review?: string;
+}
+
+interface TAppointment {
+  id?: string;
+  name?: string;
+  email?: string;
+  phone?: string;
+  listingId?: string;
+}
 export type ListingReturnFilter = {
-  id?: boolean;
-  name?: boolean;
+  id?: string;
+  name?: string;
   images: TImage[];
-  beds?: boolean;
-  Bathrooms?: boolean;
-  Price?: boolean;
-  amenities?: boolean;
-  location?: boolean;
-  ratings?: boolean;
-  reviews?: boolean;
+  beds?: number;
+  bathrooms?: number;
+  price?: number;
+  amenities?: string[];
+  location?: string;
+  ratings?: TRatings[];
+  reviews?: TReviews[];
+  averageRating?: string;
+  appointments?: TAppointment[];
 };
 
 export type TListingReturnFilter<T extends "res" | "req"> = T extends "res"

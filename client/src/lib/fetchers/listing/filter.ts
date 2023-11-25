@@ -6,13 +6,10 @@ import SSRreq from '@/types/SSRreq';
 
 export default async function 	getFilteredListings(
 	filter: TListingFilter,
-	isNotionalBestDeals: boolean = false,
 	req?: SSRreq,
 	returnFilter?: TListingReturnFilter<'req'>,
 ): Promise<{
 	data: TListingReturnFilter<'res'>[];
-	totalCount?: number;
-	priceDistribution?: { count: number; min: number; max: number }[];
 }> {
 	const allFilters = {
 		filter,
@@ -27,7 +24,6 @@ export default async function 	getFilteredListings(
 	if (filter.page === 1) {
 		return {
 			data: responseData.data.listings,
-			totalCount: responseData.data.totalListingsCount,
 		};
 	} else {
 		return {

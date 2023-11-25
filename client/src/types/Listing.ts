@@ -9,9 +9,10 @@ export interface TAddListingRequest {
 }
 
 export interface TImage {
+  id : string
   fullImageUrl: string;
   thumbnailImageUrl: string;
-
+  listingId: string;
 }
 
 export interface TAddListingResponse {
