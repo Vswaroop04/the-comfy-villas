@@ -10,8 +10,7 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 			returnFilter = RETURN_FILTER;
 		}
 		if (req.session.user?.email != process.env.ADMIN_MAIL) {
-			const { ratings, reviews, appointments, ...filteredReturnFilter } =
-				RETURN_FILTER;
+			const { reviews, appointments, ...filteredReturnFilter } = RETURN_FILTER;
 			returnFilter = filteredReturnFilter;
 		}
 
@@ -22,6 +21,12 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 			const listing = await prisma.listing.findUnique({
 				where: { id },
 				select: returnFilter,
+			});
+			prisma.listing.update({
+				where: { id },
+				data: {
+					views: { increment: 1 },
+				},
 			});
 			return res.json({ data: listing });
 		}
@@ -44,6 +49,7 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 		let orderBy = {};
 		if (sort) {
 			orderBy = {
+				rank: 'asc',
 				...(sort.price && { price: sort.price === 1 ? 'asc' : 'desc' }),
 				...(sort.date && { createdAt: sort.date === 1 ? 'asc' : 'desc' }),
 			};
@@ -57,7 +63,18 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 			select: returnFilter,
 		});
 
-		// Count the total number of listings matching the criteria
+		listings.forEach((listing: any) => {
+			if (listing.ratings && listing.ratings.length > 0) {
+				const totalRatingSum = listing.ratings.reduce(
+					(sum: any, rating: any) => sum + rating.totalRating,
+					0
+				);
+				listing.averageRating = totalRatingSum / listing.ratings.length;
+			} else {
+				listing.averageRating = 4;
+			}
+		});
+
 		const totalListingsCount = await prisma.listing.count({});
 
 		const data = {

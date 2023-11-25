@@ -20,6 +20,7 @@ model Listing {
   price             Float?
   amenities         String[]
   location          String?
+  views             Int?  @default(0)
   ratings           Ratings[] 
   reviews           Reviews[]
   appointments      Appointments[]
