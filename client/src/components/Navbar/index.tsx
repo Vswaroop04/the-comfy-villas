@@ -1,15 +1,28 @@
 // pages/index.tsx
 "use client";
-import { buttonVariants } from "../ui/button";
 import SearchBar from "./searchBar";
 import { cn } from "@/utils";
 import { useState, useRef, useEffect } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
+import useUser from "@/hooks/useUser";
+import { ChevronDown } from "lucide-react";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useRouter } from "next/navigation";
+
+import LoginPopup from "../Popups/LoginPopup";
 import useResponsive from "@/hooks/useResponsive";
 import Image from "next/image";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Navbar() {
+  const router = useRouter();
   const isLg = useResponsive("lg");
   const [isSearchInputVisible, setSearchInputVisible] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -22,6 +35,8 @@ export default function Navbar() {
   const [isPageTop, setIsPageTop] = useState(true);
   const searchMenuRef = useRef<HTMLUListElement>(null);
   const [isSearchSubmit, setIsSearchSubmit] = useState(false);
+  const { user, isLoggedIn, logout } = useUser();
+
   function searchHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsSearchSubmit(true);
@@ -42,6 +57,7 @@ export default function Navbar() {
     // Remove event listener on cleanup
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  console.log(user)
   return (
     <div
       className={`bg-white rounded-lg shadow-md p-6 ${
@@ -86,17 +102,17 @@ export default function Navbar() {
             isLg ? "" : "mr-9"
           }`}
         >
-            <Image
-              src={"/assets/Logo.png"}
-              width={`${isLg ? 120 : 90}`}
-              height={40}
-              className="h-50"
-              alt="comfy-villas"
-            />
+          <Image
+            src={"/assets/Logo.png"}
+            width={`${isLg ? 120 : 90}`}
+            height={40}
+            className="h-50"
+            alt="comfy-villas"
+          />
         </div>
       </div>
       {/* Right-aligned items */}
-      <div className="{flex items-center justify-items-end space-x-10 pr-10}">
+      <div className="flex items-center justify-items-end space-x-10 pr-10">
         <button
           className={cn(
             buttonVariants({ variant: "destructive" }),
@@ -106,20 +122,89 @@ export default function Navbar() {
           {" "}
           Home{" "}
         </button>
-        <button
-          className={cn(
-            buttonVariants({ variant: "default" }),
-            "h-8 rounded-xl p-4 py-5 text-center text-[11px] leading-3 text-base"
-          )}
-        >
-          {" "}
-          Login{" "}
-        </button>
+        {isLoggedIn ? (
+          <div className="p-4 ">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant={"ghost"}
+                  className={`flex h-8 min-w-max items-center justify-center gap-1 rounded-full p-0 text-center text-[11px] leading-3 outline-none hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 xl:text-xs`}
+                >
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback className="text-[10px]">
+                      <Image
+                        src={"/assets/user/blank_dp.webp"}
+                        alt="user"
+                        width={80}
+                        height={80}
+                      />
+                    </AvatarFallback>
+                  </Avatar>
+                  <ChevronDown size={15} />
+                </Button>
+              </DropdownMenuTrigger>
 
-        {/* other items if any */}
+              <DropdownMenuContent>
+                {user?.role === "Admin" ? (
+                  <DropdownMenuItem
+                    onClick={() => router.push("/admin")}
+                    className=" transition-[transform] duration-200 hover:scale-105 bg-white p-5"
+                  >
+                    <Image
+                      src={"/assets/user/profile.svg"}
+                      width={20}
+                      height={20}
+                      alt="dashboard"
+                    />
+                    Managment Dashboard
+                  </DropdownMenuItem>
+                ) : (
+                  <DropdownMenuItem
+                    onClick={() => router.push("/resident")}
+                    className=" transition-[transform] duration-200 hover:scale-105 bg-white  p-5"
+                  >
+                    <Image
+                      src={"/assets/user/profile.svg"}
+                      width={20}
+                      height={20}
+                      alt="dashboard"
+                    />
+                    Resident Dashboard
+                  </DropdownMenuItem>
+                )}
+
+                <DropdownMenuItem
+                  onClick={() => logout()}
+                  className=" transition-[transform] duration-200 hover:scale-105 bg-white  p-5"
+                >
+                  <Image
+                    src={"/assets/user/logout.svg"}
+                    width={20}
+                    height={20}
+                    alt="logout_img"
+                  />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        ) : (
+          <button
+            className={cn(
+              buttonVariants({ variant: "default" }),
+              "h-8 rounded-xl p-4 py-5 text-center text-[11px] leading-3 text-base"
+            )}
+            onClick={() => setIsLoginOpen(true)}
+          >
+            {" "}
+            Login{" "}
+          </button>
+        )}
       </div>
 
-      {/* Put your navbar content here */}
+      {isLoginOpen && (
+        <LoginPopup isOpen={isLoginOpen} setOpen={setIsLoginOpen} />
+      )}
     </div>
   );
 }

@@ -8,6 +8,8 @@ import { useState } from "react";
 import { Provider } from "jotai";
 import ResponsiveInit from "../lib/providers/ResponsiveInit";
 import UserInit from "@/lib/providers/UserInit";
+import ToastProvider from "@/lib/providers/toaster.provider";
+
 import {
   DehydratedState,
   QueryClient,
@@ -34,7 +36,6 @@ export default function RootLayout({
       <QueryClientProvider client={queryClient}>
         <Provider>
           <ResponsiveInit />
-          <UserInit />
           <Head>
             <meta
               name="viewport"
@@ -42,15 +43,17 @@ export default function RootLayout({
             />
             <title> Comfy Villas </title>
           </Head>
+          <UserInit />
 
           <html lang="en">
-            <body className={inter.className}>{children}</body>
+            <body className={inter.className}>
+              <ToastProvider> {children}</ToastProvider>
+            </body>
           </html>
+
           {/* <DevTools theme="dark" /> */}
         </Provider>
       </QueryClientProvider>
     </>
   );
 }
-
-
