@@ -10,7 +10,8 @@ const SearchComponent = () => {
   const debouncedSearchText = useDebounce(searchInput, 500);
   const [isSearchInputVisible, setSearchInputVisible] = useState(false);
   const searchRef = useRef(null);
-
+  const placeholderImageUrl =
+    "https://res.cloudinary.com/dpbuff0qs/image/upload/v1700000971/thumbnails/eepadzv1wozeg8rcpygh.jpg";
   const { data: searchResults } = useQuery({
     queryKey: ["Searchlocation", debouncedSearchText],
     queryFn: () => getSearchResults({ searchText: debouncedSearchText }),
@@ -64,7 +65,9 @@ const SearchComponent = () => {
             >
               <div className="flex items-center">
                 <img
-                  src={result.images[0].thumbnailImageUrl}
+                  src={
+                    result?.images?.[0]?.thumbnailImageUrl || placeholderImageUrl
+                  }
                   alt={result.name}
                   className="w-16 h-16 object-cover rounded-md mr-4"
                 />
