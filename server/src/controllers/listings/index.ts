@@ -49,9 +49,12 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 		let orderBy = {};
 		if (sort) {
 			orderBy = {
-				rank: 'asc',
 				...(sort.price && { price: sort.price === 1 ? 'asc' : 'desc' }),
 				...(sort.date && { createdAt: sort.date === 1 ? 'asc' : 'desc' }),
+			};
+		} else {
+			orderBy = {
+				rank: 'asc',
 			};
 		}
 
@@ -78,7 +81,7 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 		const totalListingsCount = await prisma.listing.count({});
 
 		const data = {
-			...(page === 1 ? { listings, totalListingsCount } : listings),
+			...(page === 1 ? { listings, totalListingsCount } : { listings }),
 		};
 		// Return the listings along with the total count
 		res.json({ data });
