@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Carousel from "@/components/Carousel";
 import Gallery from "@/components/Gallery";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
 import ListingComponent from "@/components/Home/ListingHeaderComponent";
 import OffersGridComponent from "@/components/Home/OffersGridComponent";
 import { NextSeo } from "next-seo";
@@ -23,7 +22,7 @@ export default async function Home() {
 
   const offers = await getFilteredListings(filter);
   // Ensure that the offers match the expected type
-  const formattedOffers = offers.data.map((offer: any) => ({
+  const formattedOffers = offers.data?.listings?.map((offer: any) => ({
     id: offer.id,
     title: offer.name,
     location: offer.location,
@@ -38,12 +37,10 @@ export default async function Home() {
           <title>Home | Comfy Villas</title>
         </head>
 
-        <Navbar />
         <Carousel />
         <Gallery />
         <ListingComponent />
         <OffersGridComponent offers={formattedOffers} />
-        <Footer />
       </>
     </>
   );

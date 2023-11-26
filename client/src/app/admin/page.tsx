@@ -1,7 +1,6 @@
-import React from 'react'
 
 export default function Admin() {
   return (
-    <div>Admin</div>
+    <div className="mt-44" >Admin</div>
   )
 }

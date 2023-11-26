@@ -17,6 +17,7 @@ const SearchBar: React.FC<{
   onBlur?: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
   setIsSearchActive?: React.Dispatch<React.SetStateAction<boolean>>;
   isPageTop?: boolean;
+  
 }> = ({
   searchInput,
   setSearchInput,

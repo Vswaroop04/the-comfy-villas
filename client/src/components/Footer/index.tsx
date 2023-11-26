@@ -1,6 +1,6 @@
 const NewsletterComponent = () => {
   return (
-    <div className="bg-gray-800 p-10 text-white flex justify-between items-center mt-5">
+    <div className="bg-gray-800 p-10 text-white flex justify-between items-center mt-5 bottom-0" >
       <div className="flex flex-col space-y-2">
         <h2 className="text-2xl font-bold my-5">Newsletter & Special Promo</h2>
         <div className="flex space-x-2">

@@ -9,10 +9,12 @@ import { ChevronDown } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
-
+import { getSearchResults } from "@/lib/fetchers/listing/filter";
+import { useQuery } from "@tanstack/react-query";
 import LoginPopup from "../Popups/LoginPopup";
 import useResponsive from "@/hooks/useResponsive";
 import Image from "next/image";
+import { ScrollArea } from "../ui/scroll-area";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,15 +33,21 @@ export default function Navbar() {
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [isSearchMenuVisible, setIsSearchMenuVisible] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+
   const searchDebounce = useDebounce(searchInput);
   const [isPageTop, setIsPageTop] = useState(true);
   const searchMenuRef = useRef<HTMLUListElement>(null);
   const [isSearchSubmit, setIsSearchSubmit] = useState(false);
   const { user, isLoggedIn, logout } = useUser();
+  const debouncedSearchText = useDebounce(searchInput, 400);
 
   function searchHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsSearchSubmit(true);
+  }
+
+  function handleResultClick(result: any) {
+    console.log(result);
   }
 
   useEffect(() => {
@@ -57,7 +65,23 @@ export default function Navbar() {
     // Remove event listener on cleanup
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  console.log(user)
+  console.log(user);
+
+  const { data: searchResults } = useQuery({
+    queryKey: ["Searchlocation", debouncedSearchText],
+    queryFn: async () => {
+      if (debouncedSearchText) {
+        let filter = {
+          searchText: debouncedSearchText,
+        };
+        const resp = await getSearchResults(filter);
+        console.log(resp);
+        return resp;
+      }
+    },
+    enabled: isSearchInputVisible, // Only execute the query if inputClicked is true
+  });
+
   return (
     <div
       className={`bg-white rounded-lg shadow-md p-6 ${
@@ -79,20 +103,23 @@ export default function Navbar() {
             onFocus={setIsSearchMenuVisible.bind(null, true)}
             isPageTop={isPageTop}
           />
-          <ul
-            ref={searchMenuRef}
-            className={`absolute left-5 top-24 z-10 w-[calc(100%-2.5rem)] overflow-hidden rounded-md bg-white lg:left-0 lg:top-11 lg:w-full`}
-          >
-            {/* <ScrollArea
-              className={`${
-                data?.searchResults?.length &&
-                (!isLg || isNavVisible) &&
-                isSearchMenuVisible
-                  ? "max-h-60"
-                  : "max-h-0"
-              } flex w-full flex-col px-0 transition-all duration-700`}
-            ></ScrollArea> */}
-          </ul>
+          {isSearchInputVisible &&
+            searchResults &&
+            searchResults?.length > 0 && (
+              <div className="absolute top-full mt-0 w-60  bg-white shadow-lg z-50">
+                <ul className="max-h-60 w-full overflow-auto">
+                  {searchResults.map((result) => (
+                    <li
+                      key={result.id} // Assuming each result has a unique 'id'
+                      className="cursor-pointer px-4 py-2 hover:bg-gray-100 "
+                      onClick={() => handleResultClick(result)}
+                    >
+                      {result.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
         </div>
         {/* other items if any */}
       </div>
@@ -118,6 +145,9 @@ export default function Navbar() {
             buttonVariants({ variant: "destructive" }),
             "h-8 rounded-full p-4  text-center text-[11px] leading-3 text-base"
           )}
+          onClick={() => {
+            router.push("/");
+          }}
         >
           {" "}
           Home{" "}

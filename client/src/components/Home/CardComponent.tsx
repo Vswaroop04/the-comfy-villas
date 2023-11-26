@@ -8,12 +8,12 @@ const CardComponent = ({
   rating,
   imageSrc,
 }: {
-  title: string;
-  subtitle: string;
-  location: string;
-  price: string;
-  rating: number;
-  imageSrc: string;
+  title?: string;
+  subtitle?: string;
+  location?: string;
+  price?: number;
+  rating?: number;
+  imageSrc?: string;
 }) => {
   return (
     <div className="max-w-sm rounded-xl overflow-hidden shadow-lg bg-white hover:-translate-y-1 hover:scale-110 duration-300">
@@ -28,7 +28,7 @@ const CardComponent = ({
           <div className="absolute right-0 top-10">
             <div className="ml-4">
               <span className=" ml-6 text-sm text-gray-600">
-                {Math.round(rating * 10) / 10}
+                {Math.round((rating || 1) * 10) / 10}
               </span>
               <div
                 className=" flex-none text-sm mb-2

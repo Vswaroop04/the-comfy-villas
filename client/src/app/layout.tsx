@@ -9,9 +9,11 @@ import { Provider } from "jotai";
 import ResponsiveInit from "../lib/providers/ResponsiveInit";
 import UserInit from "@/lib/providers/UserInit";
 import ToastProvider from "@/lib/providers/toaster.provider";
-
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import {
   DehydratedState,
+  Hydrate,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
@@ -24,18 +26,25 @@ const metadata: Metadata = {
   description: "A Housing Application",
 };
 
+const queryClientOptions = {
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
+};
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [queryClient] = useState(() => new QueryClient(QCOptions));
+  const [queryClient] = useState(() => new QueryClient(queryClientOptions));
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <Provider>
-          <ResponsiveInit />
+      <Provider>
+        <QueryClientProvider client={queryClient}>
           <Head>
             <meta
               name="viewport"
@@ -46,14 +55,16 @@ export default function RootLayout({
           <UserInit />
 
           <html lang="en">
+            <Navbar />
             <body className={inter.className}>
               <ToastProvider> {children}</ToastProvider>
             </body>
+            <Footer />
           </html>
 
           {/* <DevTools theme="dark" /> */}
-        </Provider>
-      </QueryClientProvider>
+        </QueryClientProvider>
+      </Provider>
     </>
   );
 }

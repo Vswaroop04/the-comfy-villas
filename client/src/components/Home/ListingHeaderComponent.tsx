@@ -1,4 +1,8 @@
+"use client"
+import { useRouter } from "next/router";
+
 const ListingComponent = () => {
+  const router = useRouter();
   return (
     <div className="mx-20 my-10">
       <div>
@@ -7,7 +11,11 @@ const ListingComponent = () => {
           <h1 className="text-5xl font-semibold mt-2">
             Best offers of the month
           </h1>
-          <button>
+          <button
+            onClick={() => {
+              router.push("/listings");
+            }}
+          >
             <p className="text-2xl text-[#65AEF2] hover:scale-105">View All</p>
           </button>
         </div>
