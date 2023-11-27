@@ -5,6 +5,15 @@ const nextConfig = {
   // Required for UI css to be transpiled correctly 👇
   transpilePackages: ["jotai-devtools"],
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+    ],
+    minimumCacheTTL: 1500000,
+  },
   webpack: (config, { dev, isServer }) => {
     // Fixes npm packages that depend on `fs` module
     if (!dev && !isServer) {
@@ -12,7 +21,7 @@ const nextConfig = {
         fs: "empty",
       });
     }
-  }
+  },
 };
 
 module.export = nextConfig;

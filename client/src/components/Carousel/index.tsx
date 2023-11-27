@@ -7,10 +7,6 @@ export default function Carousel() {
   const slides = [{ SlideJSX: Slide }];
   return (
     <div>
-      <NextSeo
-        title="Home | Comfy Villas"
-        description="Comfy Villas landing page"
-      />
       <CarouselComponent Slides={slides} />
     </div>
   );

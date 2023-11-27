@@ -33,6 +33,9 @@ interface TReviews {
   userId?: string;
   listingId?: string;
   review?: string;
+  user?: {
+    name?: string;
+  };
 }
 
 interface TAppointment {
@@ -55,6 +58,7 @@ export type ListingReturnFilter = {
   reviews?: TReviews[];
   averageRating?: number;
   appointments?: TAppointment[];
+  rank?: number;
 };
 
 export type TListingReturnFilter<T extends "res" | "req"> = T extends "res"

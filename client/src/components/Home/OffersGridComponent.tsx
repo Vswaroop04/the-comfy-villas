@@ -28,6 +28,7 @@ const OffersGridComponent = ({ offers }: any) => {
           {offers &&
             offers?.map((offer: any) => (
               <CardComponent
+                id = {offer.id}
                 key={offer.id}
                 title={offer.title}
                 subtitle="Villa"

@@ -78,6 +78,7 @@ export default function Listings() {
               page.data?.listings?.map((item) => (
                 <div className="m-1.5" key={item.id}>
                   <CardComponent
+                    id = {item.id}
                     title={item.name}
                     key={item.id}
                     rating={item.averageRating}

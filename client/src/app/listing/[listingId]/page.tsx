@@ -1,4 +1,6 @@
 import { getListingByID } from "@/lib/fetchers/listing/filter";
+import SimpleCarousal from "@/components/ListingPage/CarouselComponent";
+import ListingDetails from "@/components/ListingPage/ListingDetails"
 
 async function getData(listingId: string) {
   const filter = {
@@ -14,9 +16,15 @@ export default async function Page({
 }: {
   params: { listingId: string };
 }) {
+  console.log(params.listingId);
   const data = await getData(params.listingId);
 
   console.log(data);
 
-  return <main></main>;
+  return (
+    <div className="mt-44 ml-28">
+      <SimpleCarousal images={data?.images} />
+      <ListingDetails ListingDetails={data} />
+    </div>
+  );
 }
