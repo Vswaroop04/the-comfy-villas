@@ -160,20 +160,24 @@ export default function Home({
           {activeTab === "reviews" && (
             <TabContent>
               {" "}
-              {ListingDetails.reviews?.map((review, index) => (
-                <div
-                  key={index}
-                  className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm"
-                >
-                  <div className="mb-2 items-center">
-                    <h1 className="font-bold mb-8 text-3xl">
-                      {" "}
-                      {review.user?.name} (Resident)
-                    </h1>
-                    <p className="text-lg"> {review.review}</p>
+              {ListingDetails.reviews && ListingDetails.reviews?.length > 0 ? (
+                ListingDetails.reviews?.map((review, index) => (
+                  <div
+                    key={index}
+                    className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm"
+                  >
+                    <div className="mb-2 items-center">
+                      <h1 className="font-bold mb-8 text-3xl">
+                        {" "}
+                        {review.user?.name} (Resident)
+                      </h1>
+                      <p className="text-lg"> {review.review}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <h1>No Reviews Found</h1>
+              )}
             </TabContent>
           )}
           <div className="my-4">

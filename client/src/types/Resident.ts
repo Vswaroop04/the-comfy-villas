@@ -11,8 +11,8 @@ export interface TDeleteResident {
 
 export interface TFeedback {
   listingId: string;
-  amenitiesRatings: number;
-  managementRatings: number;
-  serviceRatings: number;
+  amenitiesRatings?: number;
+  managementRatings?: number;
+  serviceRatings?: number;
   review?: string;
 }

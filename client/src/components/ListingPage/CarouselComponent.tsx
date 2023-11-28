@@ -20,7 +20,7 @@ import "swiper/css/pagination";
 import "swiper/css/virtual";
 import Image from "next/image";
 
-const SimpleCarousel = ({ images }: any) => {
+const SimpleCarousel = ({ images,height }: any) => {
   return (
     <Swiper
       modules={[
@@ -53,7 +53,7 @@ const SimpleCarousel = ({ images }: any) => {
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
       }}
-      className="h-[60vh]"
+      className={height}
     >
       {images.map((image: any, index: any) => (
         <SwiperSlide key={index}>
@@ -61,7 +61,7 @@ const SimpleCarousel = ({ images }: any) => {
             unoptimized 
             src={image.fullImageUrl}
             alt={`Slide ${index}`}
-            width={1600}
+            width={1250}
             height={120}
           />
         </SwiperSlide>

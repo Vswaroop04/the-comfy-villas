@@ -89,7 +89,7 @@ export default function Navbar() {
       } top-5 left-10 right-10 z-10 flex justify-between items-center`}
     >
       <div className="flex items-center">
-        <div className={`flex flex-grow flex-col  "lg:relative"`}>
+        {/* <div className={`flex flex-grow flex-col  "lg:relative"`}>
           <SearchBar
             searchInput={searchInput}
             setSearchInput={setSearchInput}
@@ -120,20 +120,20 @@ export default function Navbar() {
                 </ul>
               </div>
             )}
-        </div>
+        </div> */}
         {/* other items if any */}
       </div>
       <div className={`flex   ${isLg ? "items-center" : "items-center ml-6"}`}>
         <div
           className={`${isPageTop ? "fixed" : "absolute"} ${
-            isLg ? "" : "mr-9"
+            isLg ? "h-[10vh]" : "mr-9"
           }`}
         >
           <Image
             src={"/assets/Logo.png"}
-            width={`${isLg ? 120 : 90}`}
-            height={40}
-            className="h-50"
+            width={`${isLg ? 200 : 90}`}
+            height={60}
+            className="h-[15vh] w-[15vh]"
             alt="comfy-villas"
           />
         </div>
@@ -165,7 +165,7 @@ export default function Navbar() {
                       <Image
                         src={"/assets/user/blank_dp.webp"}
                         alt="user"
-                        width={80}
+                        width={80 }
                         height={80}
                       />
                     </AvatarFallback>
@@ -177,7 +177,7 @@ export default function Navbar() {
               <DropdownMenuContent>
                 {user?.role === "Admin" ? (
                   <DropdownMenuItem
-                    onClick={() => router.push("/admin")}
+                    onClick={() => router.push("/managment")}
                     className=" transition-[transform] duration-200 hover:scale-105 bg-white p-5"
                   >
                     <Image

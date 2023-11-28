@@ -59,7 +59,7 @@ const LoginPopup = ({
       const resp = await login(values.email, values.password);
       console.log(resp);
       setIsFetching(false);
-      console.log(resp)
+      console.log(resp);
       toast.message(resp.message);
 
       if (resp.message == "Login successful") {
@@ -68,7 +68,7 @@ const LoginPopup = ({
             ...resp.user,
             role: "Admin",
           });
-          router.push("/admin", { scroll: false });
+          router.push("/managment", { scroll: false });
         } else {
           setUser({
             ...resp.user,

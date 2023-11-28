@@ -1,3 +1,5 @@
+import { TListingReturnFilter } from "@/types/ListingFilter";
+
 interface TResidentResponse {
   user: User;
 }
@@ -9,22 +11,9 @@ interface User {
   name: string;
   phone: string;
   id: string;
-  listing: Listing;
+  listing: TListingReturnFilter<"res">;
 }
 
-interface Listing {
-  id: string;
-  name: string;
-  rank: number;
-  beds: number;
-  bathrooms: number;
-  price: number;
-  amenities: string[];
-  location: string;
-  views: number;
-  createdAt: string;
-  updatedAt: string;
-}
 
 interface Review {
   id: string;
@@ -49,16 +38,14 @@ import TUser from "@/types/user";
 import httpClient from "@/utils/httpClient";
 import { TDeleteResident, TFeedback } from "@/types/Resident";
 
-export default async function getResident(token: string): Promise<{
+export default async function getResident(req?: SSRreq): Promise<{
   user: User;
 }> {
   const responseData = await httpClient({
     url: `/resident/`,
     method: "GET",
     isCustomUrl: false,
-    headers: {
-      "X-Csrf-Token": token,
-    },
+    ...SSRHeaders(req),
   });
   return responseData;
 }

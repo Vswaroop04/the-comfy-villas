@@ -1,3 +1,4 @@
+
 import logoutFunc from '@/lib/fetchers/auth/logout';
 import { hasUserResolvedAtom } from '@/lib/providers/UserInit';
 import globalLoadingAtom from '@/store/loading';

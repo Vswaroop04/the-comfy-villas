@@ -1,11 +1,10 @@
-"use client"
-import getResident from "@/lib/fetchers/residents/getResident";
-import isLoggedIn from "@/lib/fetchers/auth/isloggedin";
+import Resident from "@/components/Resident";
 
 export default async function page() {
-  const token = await isLoggedIn();
-  const res = await getResident(token.csrfToken);
+  return (
+    <div className="mt-44">
 
-  console.log(res);
-  return <div className="mt-44">page</div>;
+      <Resident />
+    </div>
+  );
 }
