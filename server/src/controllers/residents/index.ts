@@ -149,3 +149,28 @@ export async function getResidents(
 		next(err);
 	}
 }
+
+export async function getResident(
+	req: Request,
+	res: Response,
+	next: NextFunction
+) {
+	try {
+		const user = await prisma.resident.findFirst({
+			where: { id: req.session.user?.id },
+			select: {
+				email: true,
+				ratings: true,
+				reviews: true,
+				name: true,
+				phone: true,
+				id: true,
+				listing: true,
+			},
+		});
+
+		res.status(200).json({ user });
+	} catch (err) {
+		next(err);
+	}
+}

@@ -93,34 +93,38 @@ export default function Home({
                 </p>
               </div>
               <div className="my-2 flex">
-                <RatingComponent rating={ListingDetails.averageRating} />
+                <RatingComponent rating={ListingDetails?.averageRating || 4} />
                 <p className=" my-2 mx-2 text-gray-600">
                   {" "}
-                  {ListingDetails.averageRating}
+                  {ListingDetails?.averageRating}
                 </p>
               </div>
-              <div className="mx-auto p-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-                    <div className="mb-2 flex items-center">
-                      <p className="text-gray-600 flex-grow">
-                        Amenities Ratings
-                      </p>
-                      <RatingComponent rating={averageAmenitiesRating} />
-                    </div>
-                    <div className="mb-2 flex items-center">
-                      <p className="text-gray-600 flex-grow">
-                        Management Ratings
-                      </p>
-                      <RatingComponent rating={averageManagementRating} />
-                    </div>
-                    <div className="flex items-center">
-                      <p className="text-gray-600 flex-grow">Service Ratings</p>
-                      <RatingComponent rating={averageServiceRating} />
+              {ListingDetails.ratings && ListingDetails.ratings.length > 0 && (
+                <div className="mx-auto p-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                      <div className="mb-2 flex items-center">
+                        <p className="text-gray-600 flex-grow">
+                          Amenities Ratings
+                        </p>
+                        <RatingComponent rating={averageAmenitiesRating} />
+                      </div>
+                      <div className="mb-2 flex items-center">
+                        <p className="text-gray-600 flex-grow">
+                          Management Ratings
+                        </p>
+                        <RatingComponent rating={averageManagementRating} />
+                      </div>
+                      <div className="flex items-center">
+                        <p className="text-gray-600 flex-grow">
+                          Service Ratings
+                        </p>
+                        <RatingComponent rating={averageServiceRating} />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </TabContent>
           )}
 

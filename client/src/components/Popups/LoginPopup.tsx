@@ -59,8 +59,10 @@ const LoginPopup = ({
       const resp = await login(values.email, values.password);
       console.log(resp);
       setIsFetching(false);
+      console.log(resp)
+      toast.message(resp.message);
+
       if (resp.message == "Login successful") {
-        toast.success("Login Successful");
         if (resp?.user?.role == "Admin") {
           setUser({
             ...resp.user,

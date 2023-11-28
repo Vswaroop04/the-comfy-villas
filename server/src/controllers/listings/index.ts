@@ -10,7 +10,7 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 			returnFilter = RETURN_FILTER;
 		}
 		if (req.session.user?.email != process.env.ADMIN_MAIL) {
-			const { reviews, appointments, ...filteredReturnFilter } = RETURN_FILTER;
+			const { appointments, ...filteredReturnFilter } = RETURN_FILTER;
 			returnFilter = filteredReturnFilter;
 		}
 
@@ -18,9 +18,20 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 
 		if (id) {
 			// Fetch a single listing by ID
-			const listing = await prisma.listing.findUnique({
+			const listing: any = await prisma.listing.findUnique({
 				where: { id },
-				select: returnFilter,
+				select: {
+					...returnFilter,
+					reviews: {
+						include: {
+							user: {
+								select: {
+									name: true,
+								},
+							},
+						},
+					},
+				},
 			});
 			prisma.listing.update({
 				where: { id },
@@ -28,6 +39,15 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 					views: { increment: 1 },
 				},
 			});
+			if (listing?.ratings && listing.ratings.length > 0) {
+				const totalRatingSum = listing.ratings.reduce(
+					(sum: any, rating: any) => sum + rating.totalRating,
+					0
+				);
+				listing.averageRating = totalRatingSum / listing.ratings.length;
+			} else {
+				listing.averageRating = 4;
+			}
 			return res.json({ data: listing });
 		}
 
