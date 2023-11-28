@@ -5,7 +5,7 @@ export const residentSchema = z.object({
 	email: z.string().email(),
 	password: z.string(),
 	phone: z.string(),
-	listingId : z.string()
+	listingId: z.string(),
 });
 
 export const deleteResidentSchema = z.object({
@@ -14,8 +14,8 @@ export const deleteResidentSchema = z.object({
 
 export const validateReviewRatingData = z.object({
 	listingId: z.string(),
-	amenitiesRatings: z.number(),
-	managementRatings:  z.number(),
-	serviceRatings:  z.number(),
+	amenitiesRatings: z.number().optional(),
+	managementRatings: z.number().optional(),
+	serviceRatings: z.number().optional(),
 	review: z.string().optional(),
 });

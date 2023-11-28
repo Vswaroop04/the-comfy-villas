@@ -165,7 +165,11 @@ export async function getResident(
 				name: true,
 				phone: true,
 				id: true,
-				listing: true,
+				listing: {
+					include: {
+						images: true,
+					},
+				},
 			},
 		});
 
