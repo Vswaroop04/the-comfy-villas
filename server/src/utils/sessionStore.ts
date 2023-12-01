@@ -17,9 +17,9 @@ export default session({
 	rolling: true,
 	cookie: {
 		// sameSite: 'none', // must be 'none' to enable cross-site delivery
-		sameSite: 'lax',
+		sameSite: 'none',
 		// secure: false,
-		secure: false,
+		secure: true,
 		
 		maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
 		httpOnly: true,
