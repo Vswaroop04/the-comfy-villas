@@ -116,6 +116,12 @@ const AddListingPopup = ({
     try {
       const uploadPromises = images.map((image) => {
         return new Promise((resolve, reject) => {
+          if (!image.file) {
+            // Handle the case where image.file is undefined
+            reject(new Error("Image file is undefined"));
+            return;
+          }
+
           new Compressor(image.file, {
             quality: 0.6,
             maxWidth: 800,
@@ -125,7 +131,7 @@ const AddListingPopup = ({
               const formData = new FormData();
               formData.append("image", compressedImage);
               uploadPhotos(formData)
-                .then((response : any) => response.json()) 
+                .then((response: any) => response.json())
                 .then((data) => {
                   resolve(data);
                 })
@@ -164,7 +170,6 @@ const AddListingPopup = ({
 
       console.log("Add listing response:", resp);
       setOpen(false);
-
     } catch (err) {
       console.error("Submission error:", err);
       toast.error("An error occurred while submitting the listing.");

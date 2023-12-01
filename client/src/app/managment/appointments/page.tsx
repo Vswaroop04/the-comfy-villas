@@ -4,10 +4,9 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 export default function Appointment() {
-
   return (
     <div>
-      <span className="container my-4 flex text-brand-gray">
+      <span className="mt-44 container my-4 flex text-brand-gray">
         <Link href={`/managment`} className="underline">
           Managment
         </Link>
@@ -17,7 +16,7 @@ export default function Appointment() {
         </span>
       </span>
       <Layout>
-        <AppointmentsList  />
+        <AppointmentsList />
       </Layout>
     </div>
   );

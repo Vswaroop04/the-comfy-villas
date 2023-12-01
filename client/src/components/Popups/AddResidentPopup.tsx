@@ -24,6 +24,7 @@ import { toast } from "sonner";
 import useUser from "@/hooks/useUser";
 import { useRouter } from "next/navigation";
 import addResident from "@/lib/fetchers/residents/addResident";
+import { getAllListings } from "@/lib/fetchers/listing/getAllListings";
 
 const addResidentPopup = ({
   isOpen,
@@ -33,12 +34,22 @@ const addResidentPopup = ({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const router = useRouter();
+  const [listings, setListings] = useState([]); // State to store listings
+
+  useEffect(() => {
+    const fetchListings = async () => {
+      const fetchedListings: any = await getAllListings();
+      setListings(fetchedListings.listings);
+    };
+    fetchListings();
+  }, []);
 
   const formSchemaCreate = z.object({
     name: z.string(),
     email: z.string(),
     password: z.string(),
     phone: z.string(),
+    listingId: z.string(),
   });
 
   const form = useForm<z.infer<typeof formSchemaCreate>>({
@@ -48,6 +59,7 @@ const addResidentPopup = ({
       name: "",
       phone: "",
       password: "",
+      listingId: "",
     },
   });
 
@@ -67,6 +79,7 @@ const addResidentPopup = ({
         password: values.password,
         name: values.name,
         phone: values.phone,
+        listingId: values.listingId,
       });
       console.log(resp);
       setIsFetching(false);
@@ -113,29 +126,6 @@ const addResidentPopup = ({
                           className="border-0 outline-none focus-visible:ring-0"
                           {...field}
                         />
-
-                        <FormField
-                          control={form.control}
-                          name="email"
-                          render={({ field }) => (
-                            <FormItem className="w-full">
-                              <FormLabel className="text-grey-600">
-                                Email{" "}
-                              </FormLabel>
-                              <span className="flex items-center gap-2 border-2 p-2">
-                                <FormControl className="border-0 outline-none focus:border-0 focus:outline-0">
-                                  <Input
-                                    type="email"
-                                    placeholder="Email"
-                                    className="border-0 outline-none focus-visible:ring-0"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </span>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
                       </FormControl>
                     </span>
                     <FormMessage />
@@ -147,7 +137,7 @@ const addResidentPopup = ({
                 name="phone"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel className="text-grey-600">Phone No </FormLabel>
+                    <FormLabel className="text-grey-600">Phone </FormLabel>
                     <span className="flex items-center gap-2 border-2 p-2">
                       <FormControl className="border-0 outline-none focus:border-0 focus:outline-0">
                         <Input
@@ -156,28 +146,25 @@ const addResidentPopup = ({
                           className="border-0 outline-none focus-visible:ring-0"
                           {...field}
                         />
-
-                        <FormField
-                          control={form.control}
-                          name="email"
-                          render={({ field }) => (
-                            <FormItem className="w-full">
-                              <FormLabel className="text-grey-600">
-                                Email{" "}
-                              </FormLabel>
-                              <span className="flex items-center gap-2 border-2 p-2">
-                                <FormControl className="border-0 outline-none focus:border-0 focus:outline-0">
-                                  <Input
-                                    type="email"
-                                    placeholder="Email"
-                                    className="border-0 outline-none focus-visible:ring-0"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </span>
-                              <FormMessage />
-                            </FormItem>
-                          )}
+                      </FormControl>
+                    </span>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel className="text-grey-600">Email </FormLabel>
+                    <span className="flex items-center gap-2 border-2 p-2">
+                      <FormControl className="border-0 outline-none focus:border-0 focus:outline-0">
+                        <Input
+                          type="email"
+                          placeholder="Email"
+                          className="border-0 outline-none focus-visible:ring-0"
+                          {...field}
                         />
                       </FormControl>
                     </span>
@@ -201,6 +188,26 @@ const addResidentPopup = ({
                         />
                       </FormControl>
                     </span>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="listingId"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel className="text-grey-600">Listing</FormLabel>
+                    <select
+                      className="w-full border-2 p-2 rounded-md"
+                      {...field}
+                    >
+                      {listings?.map((listing: any) => (
+                        <option key={listing.id} value={listing.id}>
+                          {listing.name}
+                        </option>
+                      ))}
+                    </select>
                     <FormMessage />
                   </FormItem>
                 )}

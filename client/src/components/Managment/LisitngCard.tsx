@@ -31,6 +31,17 @@ export default function ListingCard({
   const [isEditPopup, setIsEditPopup] = useState(false);
   const [isDeletePopup, setIsDeletePopup] = useState(false);
 
+  // Calculate average rating
+  const calculateAverageRating = () => {
+    const ratings = data?.ratings || [];
+    if (ratings.length === 0) return null;
+
+    const totalRating = ratings.reduce((acc, rating : any) => acc + rating?.totalRating, 0);
+    return totalRating / ratings.length;
+  };
+
+  const averageRating = calculateAverageRating();
+
   return (
     <div className="w-full lg:w-1/2">
       <Card className="m-2 border-brand-mblue bg-white shadow-lg rounded-lg overflow-hidden">
@@ -87,7 +98,7 @@ export default function ListingCard({
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => {
-                    setIsDeletePopup(true);
+                    setIsDeletePopup(true); 
                   }}
                 >
                   Delete Listing
@@ -104,6 +115,25 @@ export default function ListingCard({
               ))}
             </ul>
           </div>
+
+          {averageRating !== null && (
+            <div className="mt-4">
+              <h4 className="text-md font-semibold text-gray-700">Average Rating</h4>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-brand-mblue font-medium">{averageRating.toFixed(2)}</span>
+                <span>/ 5</span>
+              </div>
+            </div>
+          )}
+
+          {data?.rank && (
+            <div className="mt-4">
+              <h4 className="text-md font-semibold text-gray-700">Rank</h4>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-brand-mblue font-medium">{data.rank}</span>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 

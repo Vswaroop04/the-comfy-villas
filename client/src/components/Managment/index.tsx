@@ -5,7 +5,7 @@ import isLoggedIn from "@/lib/fetchers/auth/isloggedin";
 import { getAllListings } from "@/lib/fetchers/listing/getAllListings";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Layout from "./PageLayout";
 import { ChevronRight, PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
@@ -15,9 +15,11 @@ import { TAddListingResponse } from "@/types/Listing";
 
 export default function Page() {
   const router = useRouter();
+  const path = usePathname();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [listings, setListings] = useState<TAddListingResponse[]>([]);
-    const [isAddPopup, setIsAddPopup] = useState(false);
+  const [isAddPopup, setIsAddPopup] = useState(false);
 
   const [filteredList, setFilteredListings] = useState<TAddListingResponse[]>(
     []
@@ -32,8 +34,12 @@ export default function Page() {
     setFilteredListings(filteredListings);
   }, [searchTerm]);
 
-  const { data: searchResults, isLoading } = useQuery({
-    queryKey: ["resident"],
+  const {
+    data: searchResults,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["resident", path],
     queryFn: async () => {
       const user = await isLoggedIn();
       toast.loading("Loading User Data");
@@ -47,7 +53,9 @@ export default function Page() {
 
       try {
         const data = await getAllListings();
-        toast.success(`Listings has been fetched successfully`);
+        if (data.message == "All Listings Fetched successfully") {
+          toast.success(`Listings has been fetched successfully`);
+        }
         setListings(data.listings);
         setFilteredListings(data.listings);
         return data;
@@ -56,7 +64,13 @@ export default function Page() {
         throw error;
       }
     },
+    staleTime: 0, // Always consider data stale
+    cacheTime: 5 * 60 * 1000, // Keep data in cache for 5 minutes
   });
+  useEffect(() => {
+    refetch();
+  }, [path, refetch]);
+
   return (
     <div>
       <span className="container my-4 flex text-brand-gray">
@@ -88,7 +102,12 @@ export default function Page() {
               }}
               // onChange handler will be passed down to MyListing component
             />
-           <button className="flex items-center bg-orange-400 px-4 py-2 rounded-lg text-lg text-white hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500" onClick={() => {setIsAddPopup(true)}}>
+            <button
+              className="flex items-center bg-orange-400 px-4 py-2 rounded-lg text-lg text-white hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+              onClick={() => {
+                setIsAddPopup(true);
+              }}
+            >
               <PlusCircleIcon className="h-6 w-6" />
               <span className="ml-2">Add</span>
               <span className="ml-2">Listing</span>
@@ -100,7 +119,7 @@ export default function Page() {
             Listings={filteredList}
             setFilteredListing={setFilteredListings}
             setIsAddPopup={setIsAddPopup}
-            isAddPopup = {isAddPopup}
+            isAddPopup={isAddPopup}
           />
         </div>
       </Layout>

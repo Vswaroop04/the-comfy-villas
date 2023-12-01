@@ -1,4 +1,5 @@
 export interface TAddResident {
+  listingId : string
   name: string;
   email: string;
   password: string;

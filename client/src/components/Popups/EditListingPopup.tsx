@@ -122,6 +122,12 @@ const editListingPopup = ({
     try {
       const uploadPromises = images.map((image) => {
         return new Promise((resolve, reject) => {
+          if (!image.file) {
+            // Handle the case where image.file is undefined
+            reject(new Error("Image file is undefined"));
+            return;
+          }
+
           new Compressor(image.file, {
             quality: 0.6,
             maxWidth: 800,
@@ -159,7 +165,7 @@ const editListingPopup = ({
       console.log("Images payload:", imagesPayload);
 
       const resp = await editListing({
-        id : data.id,
+        id: data.id,
         name: values.name,
         beds: values.beds,
         bathrooms: values.bathrooms,

@@ -61,10 +61,10 @@ const deleteResidentPopup = ({
           <Trash2 className="m-auto text-red-600" />
           <div className="text-[16px] text-red-600 lg:text-[24px]">
             {" "}
-            Delete Listing?
+            Delete Resident?
           </div>
           <div className="text-[14px] lg:text-[16px]">
-            Are you sure you want to delete this Resident?
+            Are you sure you want to delete this Resident? It Will Delete His Reviews And Ratings As Well 
           </div>
         </div>
         <div className="mt-2 flex w-full justify-between">
