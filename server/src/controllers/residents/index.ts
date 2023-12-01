@@ -101,13 +101,6 @@ export async function addResident(
 			false,
 			result.email
 		);
-		// intializing session
-		req.session.user = {
-			id: user.id || '',
-			email: user.email || '',
-			name: user.name || '',
-			phone: user.phone || '',
-		};
 
 		res.status(201).json({
 			message: 'Resident User Created Successfully',
@@ -126,11 +119,18 @@ export async function deleteUserController(
 	try {
 		const result = deleteResidentSchema.parse(req.body);
 
-		await prisma.resident.delete({
-			where: { email: result.email },
-		});
+		// Start a transaction if you have multiple related records to delete
+		const deleteResident = await prisma.$transaction([
+			// Assuming you have onDelete: CASCADE setup on your foreign keys
+			prisma.ratings.deleteMany({
+				where: { userId: result.id },
+			}),
+			// Add similar deleteMany for other related models if needed
+			prisma.resident.delete({
+				where: { id: result.id },
+			}),
+		]);
 
-		// Clearing the session after deletion
 		res.status(200).json({ message: 'User deleted successfully' });
 	} catch (err) {
 		next(err);

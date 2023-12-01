@@ -45,7 +45,7 @@ model Resident {
 model Ratings {
   id               String   @id @default(cuid())
   userId           String
-  user             Resident     @relation(fields: [userId], references: [id])
+  user             Resident     @relation(fields: [userId], references: [id], onDelete: Cascade)
   listingId        String
   listing          Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
   amenitiesRatings Float
@@ -57,7 +57,7 @@ model Ratings {
 model Reviews {
   id               String   @id @default(cuid())
   userId           String
-  user             Resident     @relation(fields: [userId], references: [id])
+  user             Resident     @relation(fields: [userId], references: [id], onDelete: Cascade)
   listingId        String
   listing          Listing  @relation(fields: [listingId], references: [id] , onDelete: Cascade)
   review  String

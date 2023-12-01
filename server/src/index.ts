@@ -13,9 +13,8 @@ app.use(errorHandler);
 
 // scheduler runs for every 30 minutes
 
-schedule.scheduleJob('0,30 * * * *', function () {
-	updateListingRanks();
-});
+	// updateListingRanks();
+
 // Update listing ranks every hour
 async function main() {
 	await prisma.$connect();

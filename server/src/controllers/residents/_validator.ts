@@ -9,7 +9,7 @@ export const residentSchema = z.object({
 });
 
 export const deleteResidentSchema = z.object({
-	email: z.string().email(),
+	id: z.string(),
 });
 
 export const validateReviewRatingData = z.object({

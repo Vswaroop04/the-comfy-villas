@@ -1,23 +1,23 @@
 import prisma from '@/database/prismaClient';
-import { editListingValidator } from './_validator';
 import { NextFunction, Request, Response } from 'express';
 import listingDetails from '@/utils/listingValidCheck';
 
-export async function getAllListingController(
+export async function getAllResidents(
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) {
 	try {
-		const listings = await prisma.listing.findMany({
+		const residents = await prisma.resident.findMany({
 			include: {
-				images: true,
-				ratings : true
+                ratings: true,
+                reviews: true,
+                listing : true
 			},
 		});
 		res
 			.status(200)
-			.json({ message: 'All Listings Fetched successfully', listings });
+			.json({ message: 'All Residents  Fetched successfully', residents });
 	} catch (err) {
 		next(err);
 	}
