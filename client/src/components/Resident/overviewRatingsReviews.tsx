@@ -28,11 +28,11 @@ const OverviewRatingReview = ({ userData }: any) => {
   ];
   // State to hold the editable ratings and review
   const [ratings, setRatings] = useState({
-    amenitiesRatings: userData.ratings[0].amenitiesRatings || "",
-    managementRatings: userData.ratings[0].managementRatings || "",
-    serviceRatings: userData.ratings[0].serviceRatings || "",
+    amenitiesRatings: userData.ratings[0]?.amenitiesRatings || "",
+    managementRatings: userData.ratings[0]?.managementRatings || "",
+    serviceRatings: userData.ratings[0]?.serviceRatings || "",
   });
-  const [review, setReview] = useState(userData.reviews[0].review || "");
+  const [review, setReview] = useState(userData.reviews[0]?.review || "");
   const [openEditRatings, setOpenEditRatings] = useState(false);
 
   const [openEditReviews, setopenEditReviews] = useState(false);

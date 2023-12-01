@@ -7,12 +7,30 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Layout from "./PageLayout";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
 import MyListing from "./Listings";
+import { useState, useEffect } from "react";
+import { TAddListingResponse } from "@/types/Listing";
 
 export default function Page() {
   const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [listings, setListings] = useState<TAddListingResponse[]>([]);
+    const [isAddPopup, setIsAddPopup] = useState(false);
+
+  const [filteredList, setFilteredListings] = useState<TAddListingResponse[]>(
+    []
+  );
+
+  useEffect(() => {
+    const filteredListings = searchTerm
+      ? listings.filter((listing) =>
+          listing.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      : listings;
+    setFilteredListings(filteredListings);
+  }, [searchTerm]);
 
   const { data: searchResults, isLoading } = useQuery({
     queryKey: ["resident"],
@@ -30,6 +48,8 @@ export default function Page() {
       try {
         const data = await getAllListings();
         toast.success(`Listings has been fetched successfully`);
+        setListings(data.listings);
+        setFilteredListings(data.listings);
         return data;
       } catch (error) {
         toast.error("Error loading resident data");
@@ -49,11 +69,39 @@ export default function Page() {
         </span>
       </span>
       <Layout>
-        <div className="flex justify-between">
-          <div className="text-[18px] font-semibold lg:text-[28px]">
-            Listings
+        <div className="container my-4">
+          {/* Listings Header */}
+          <div className="flex justify-between items-center mb-4">
+            <h1 className="text-[18px] font-semibold lg:text-[28px]">
+              Listings
+            </h1>
+            {/* Other elements if needed */}
           </div>
-          <MyListing Listings={searchResults?.listings} />
+          {/* Search Bar */}
+          <div className="my-4 flex">
+            <input
+              type="text"
+              placeholder="Search listings..."
+              className="w-full p-2 border border-gray-300 rounded-md"
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+              // onChange handler will be passed down to MyListing component
+            />
+           <button className="flex items-center bg-orange-400 px-4 py-2 rounded-lg text-lg text-white hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500" onClick={() => {setIsAddPopup(true)}}>
+              <PlusCircleIcon className="h-6 w-6" />
+              <span className="ml-2">Add</span>
+              <span className="ml-2">Listing</span>
+            </button>
+          </div>
+
+          {/* Listings Component */}
+          <MyListing
+            Listings={filteredList}
+            setFilteredListing={setFilteredListings}
+            setIsAddPopup={setIsAddPopup}
+            isAddPopup = {isAddPopup}
+          />
         </div>
       </Layout>
     </div>

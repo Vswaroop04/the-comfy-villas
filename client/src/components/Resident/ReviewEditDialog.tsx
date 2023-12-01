@@ -45,11 +45,11 @@ export default function EditDialog({
   const form = useForm<z.infer<typeof formSchemaCreate>>({
     resolver: zodResolver(formSchemaCreate),
     defaultValues: {
-      review: reviews[0].review,
+      review: reviews[0]?.review,
     },
   });
   const [isFetching, setIsFetching] = useState(false);
-  const [review, setReview] = useState(reviews[0].review);
+  const [review, setReview] = useState(reviews[0]?.review);
 
   async function onSubmit(values: z.infer<typeof formSchemaCreate>) {
     try {

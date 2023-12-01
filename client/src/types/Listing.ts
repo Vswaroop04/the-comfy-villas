@@ -9,10 +9,8 @@ export interface TAddListingRequest {
 }
 
 export interface TImage {
-  id : string
   fullImageUrl: string;
   thumbnailImageUrl: string;
-  listingId: string;
 }
 
 export interface TAddListingResponse {
@@ -36,7 +34,7 @@ export interface TEditListingRequest {
   beds?: number;
   bathrooms?: number;
   price?: number;
-  images: TImage[];
+  images?: TImage[];
 
   amenities?: string[];
   location?: string;

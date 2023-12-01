@@ -35,7 +35,7 @@ const OffersGridComponent = ({ offers }: any) => {
                 location={offer.location}
                 price={offer.price}
                 rating={offer.averageRating}
-                imageSrc={offer.images[0].thumbnailImageUrl}
+                imageSrc={offer.images[0]?.thumbnailImageUrl}
               />
             ))}
         </div>

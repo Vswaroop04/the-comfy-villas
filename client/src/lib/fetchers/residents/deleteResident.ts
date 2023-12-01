@@ -5,7 +5,7 @@ import httpClient from "@/utils/httpClient";
 import { TFeedback } from "@/types/Resident";
 
 export default async function deleteResident(
-  content?: TFeedback
+  email?: string
 ): Promise<{
   message: string;
 }> {
@@ -13,7 +13,7 @@ export default async function deleteResident(
     url: `/resident/delete`,
     method: "POST",
     isCustomUrl: false,
-    body: JSON.stringify(content),
+    body: JSON.stringify({email}),
   });
   return responseData;
 }

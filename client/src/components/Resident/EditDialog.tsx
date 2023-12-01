@@ -47,20 +47,20 @@ export default function EditDialog({
   const form = useForm<z.infer<typeof formSchemaCreate>>({
     resolver: zodResolver(formSchemaCreate),
     defaultValues: {
-      amenitiesRatings: ratings[0].amenitiesRatings,
-      managementRatings: ratings[0].managementRatings,
-      serviceRatings: ratings[0].serviceRatings,
+      amenitiesRatings: ratings[0]?.amenitiesRatings,
+      managementRatings: ratings[0]?.managementRatings,
+      serviceRatings: ratings[0]?.serviceRatings,
     },
   });
   const [isFetching, setIsFetching] = useState(false);
   const [amenitiesRatings, setAmenities] = useState(
-    ratings[0].amenitiesRatings
+    ratings[0]?.amenitiesRatings
   );
   const [managementRatings, setManagementRatings] = useState(
-    ratings[0].managementRatings
+    ratings[0]?.managementRatings
   );
   const [serviceRatings, setServiceRatings] = useState(
-    ratings[0].serviceRatings
+    ratings[0]?.serviceRatings
   );
 
   const handleAmenitiesStarClick = (value: any) => {

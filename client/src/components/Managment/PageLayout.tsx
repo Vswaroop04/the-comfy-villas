@@ -1,3 +1,4 @@
+"use client"
 import useResponsive from '@/hooks/useResponsive';
 import Image from 'next/image';
 import Link from 'next/link';
