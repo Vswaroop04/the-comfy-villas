@@ -34,6 +34,8 @@ export async function editListingController(
 					},
 				});
 			} else {
+
+			
 				await prisma.image.create({
 					data: {
 						fullImageUrl: image.fullImageUrl,

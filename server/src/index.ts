@@ -13,11 +13,13 @@ app.use(errorHandler);
 
 // scheduler runs for every 30 minutes
 
-	// updateListingRanks();
-
-// Update listing ranks every hour
+schedule.scheduleJob('0,30 * * * *', function () {
+	updateListingRanks();
+});
 async function main() {
 	await prisma.$connect();
+	await updateListingRanks();
+
 	console.log(
 		'Prisma Client successfully initialized and connected to the database.'
 	);

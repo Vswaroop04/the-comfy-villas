@@ -71,6 +71,7 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 			orderBy = {
 				...(sort.price && { price: sort.price === 1 ? 'asc' : 'desc' }),
 				...(sort.date && { createdAt: sort.date === 1 ? 'asc' : 'desc' }),
+				...(!sort.price && !sort.date && { rank: 'asc' }),
 			};
 		} else {
 			orderBy = {
@@ -79,7 +80,7 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 		}
 
 		// Fetch listings with pagination, search, and sorting
-		console.log(orderBy)
+		console.log(orderBy);
 		const listings = await prisma.listing.findMany({
 			skip,
 			take: limit,
