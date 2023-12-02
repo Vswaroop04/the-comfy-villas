@@ -34,7 +34,6 @@ export default function Listings() {
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
-
   } = useInfiniteQuery({
     queryKey: ["listings", filter],
     queryFn: ({ pageParam }) =>
@@ -53,7 +52,6 @@ export default function Listings() {
     },
   });
 
-
   const intersectionRef = useRef(null);
 
   const intersection = useIntersection(intersectionRef, {
@@ -66,6 +64,7 @@ export default function Listings() {
 
   useEffect(() => {
     if (intersection && intersection.isIntersecting && hasNextPage) {
+      toast.loading("Villas Are Loading");
       fetchNextPage();
     }
   }, [intersection, fetchNextPage, hasNextPage]);

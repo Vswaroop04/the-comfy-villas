@@ -57,9 +57,8 @@ const LoginPopup = ({
     setIsFetching(true);
     try {
       const resp = await login(values.email, values.password);
-      console.log(resp);
       setIsFetching(false);
-      console.log(resp);
+
 
       if (resp.message == "Login successful") {
         toast.success(resp.message);

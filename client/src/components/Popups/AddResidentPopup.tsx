@@ -81,9 +81,7 @@ const addResidentPopup = ({
         phone: values.phone,
         listingId: values.listingId,
       });
-      console.log(resp);
       setIsFetching(false);
-      console.log(resp);
       toast.message(resp.message);
 
       if (resp.message == "Resident User Created Successfully") {

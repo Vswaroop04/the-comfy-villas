@@ -24,9 +24,7 @@ const list = [
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 	const router = usePathname();
-	console.log(router)
 	const isLg = useResponsive("lg");
-	console.log(isLg)
 
   return (
     <div

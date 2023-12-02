@@ -58,7 +58,6 @@ export default function EditDialog({
         listingId,
         review,
       });
-      console.log(resp);
       setIsFetching(false);
       toast.message(resp.message);
       setOpen(false);

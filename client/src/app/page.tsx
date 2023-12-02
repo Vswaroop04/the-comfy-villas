@@ -18,7 +18,6 @@ export default async function Home() {
     limit: 9,
   };
 
-  console.log("making request");
 
   const offers = await getFilteredListings(filter);
   // Ensure that the offers match the expected type

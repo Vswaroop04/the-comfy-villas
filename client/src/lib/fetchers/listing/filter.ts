@@ -1,4 +1,3 @@
-"use client"
 import httpClient from "../../../utils/httpClient";
 import SSRHeaders from "@/utils/ssrHeaders";
 import TListingFilter, {
@@ -19,8 +18,6 @@ export default async function getFilteredListings(
     totalListingsCount?: number;
   };
 }> {
-  toast.loading("Villas Are Loading");
-
   const allFilters = {
     filter,
     ...(returnFilter && { returnFilter }),
@@ -31,7 +28,6 @@ export default async function getFilteredListings(
     ...SSRHeaders(req),
     body: JSON.stringify(allFilters),
   });
-  console.log(responseData);
   if (filter.page === 1) {
     return {
       data: responseData.data,

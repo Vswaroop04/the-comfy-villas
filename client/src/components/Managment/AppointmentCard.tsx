@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import viewAppointments from "@/lib/fetchers/appointment/viewAppointment";
 
 const AppointmentCard = (appointment: any) => {
-  console.log(appointment);
   return (
     <div className="border rounded-lg p-4 mb-4">
       <h3 className="text-lg font-semibold">{appointment.appointment.name}</h3>

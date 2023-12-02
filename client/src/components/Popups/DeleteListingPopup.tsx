@@ -42,7 +42,6 @@ const deleteListingPopup = ({
   >;
 }) => {
   const router = useRouter();
-  console.log(listingId);
   async function handleDeleteListing() {
     try {
       const resp = await deleteListing({ id: listingId });

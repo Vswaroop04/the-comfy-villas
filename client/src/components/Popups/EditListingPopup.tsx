@@ -88,7 +88,6 @@ const editListingPopup = ({
     addUpdateIndex: number[] | undefined
   ) => {
     // data for submit
-    console.log(imageList, addUpdateIndex);
     setImages(imageList as never[]);
   };
   const formSchemaCreate = z.object({
@@ -152,7 +151,6 @@ const editListingPopup = ({
       });
 
       const uploadedImagesResults = await Promise.all(uploadPromises);
-      console.log("Uploaded images results:", uploadedImagesResults);
 
       const imagesPayload = uploadedImagesResults
         .map((result: any) => {
@@ -162,7 +160,6 @@ const editListingPopup = ({
           };
         })
         .filter((img) => img.fullImageUrl && img.thumbnailImageUrl);
-      console.log("Images payload:", imagesPayload);
 
       const resp = await editListing({
         id: data.id,
@@ -175,7 +172,6 @@ const editListingPopup = ({
         location: values.location,
       });
 
-      console.log("Add listing response:", resp);
       setOpen(false);
     } catch (err) {
       console.error("Submission error:", err);

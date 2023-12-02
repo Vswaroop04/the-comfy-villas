@@ -30,7 +30,6 @@ export default function Resident() {
       try {
         const data = await getResident();
         toast.success(`Residents has been fetched successfully`);
-        console.log(data);
         return data;
       } catch (error) {
         toast.error("Error loading resident data");

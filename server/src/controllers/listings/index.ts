@@ -80,7 +80,6 @@ async function filter(req: Request, res: Response, next: NextFunction) {
 		}
 
 		// Fetch listings with pagination, search, and sorting
-		console.log(orderBy);
 		const listings = await prisma.listing.findMany({
 			skip,
 			take: limit,

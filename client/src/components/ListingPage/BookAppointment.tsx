@@ -67,7 +67,6 @@ export default function BookAppointment({
         phone: values.phone,
         listingId,
       });
-      console.log(resp);
       setIsFetching(false);
       if (resp.message == "Appointment Booked Succesfully") {
         toast.success(resp.message);  

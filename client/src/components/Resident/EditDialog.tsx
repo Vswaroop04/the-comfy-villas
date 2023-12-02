@@ -64,8 +64,7 @@ export default function EditDialog({
   );
 
   const handleAmenitiesStarClick = (value: any) => {
-    console.log("aahsfbjabc");
-    console.log(value);
+
     setAmenities(value);
   };
   const handleManagementStarClick = (value: any) => {
@@ -84,7 +83,6 @@ export default function EditDialog({
         managementRatings,
         serviceRatings,
       });
-      console.log(resp);
       setIsFetching(false);
       toast.message(resp.message);
       setOpen(false);

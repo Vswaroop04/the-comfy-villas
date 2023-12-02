@@ -15,7 +15,6 @@ export async function uploadPhotos(
 	next: NextFunction
 ) {
 	try {
-		console.log('Request File:', req.file); // Debugging
 
 		if (!req.file) {
 			throw new Error('No file provided');

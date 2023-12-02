@@ -47,7 +47,6 @@ export default function Navbar() {
   }
 
   function handleResultClick(result: any) {
-    console.log(result);
   }
 
   useEffect(() => {
@@ -65,7 +64,6 @@ export default function Navbar() {
     // Remove event listener on cleanup
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  console.log(user);
 
   const { data: searchResults } = useQuery({
     queryKey: ["Searchlocation", debouncedSearchText],
@@ -75,7 +73,6 @@ export default function Navbar() {
           searchText: debouncedSearchText,
         };
         const resp = await getSearchResults(filter);
-        console.log(resp);
         return resp;
       }
     },

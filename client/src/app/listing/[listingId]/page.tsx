@@ -16,10 +16,8 @@ export default async function Page({
 }: {
   params: { listingId: string };
 }) {
-  console.log(params.listingId);
   const data = await getData(params.listingId);
 
-  console.log(data);
 
   return (
     <div className="mt-44 ml-28">
