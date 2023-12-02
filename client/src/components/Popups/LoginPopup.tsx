@@ -60,9 +60,9 @@ const LoginPopup = ({
       console.log(resp);
       setIsFetching(false);
       console.log(resp);
-      toast.message(resp.message);
 
       if (resp.message == "Login successful") {
+        toast.success(resp.message);
         if (resp?.user?.role == "Admin") {
           setUser({
             ...resp.user,
@@ -76,6 +76,8 @@ const LoginPopup = ({
           router.push("/resident", { scroll: false });
         }
         setOpen(false);
+      } else {
+        toast.error(resp.message);
       }
     } catch (err) {
       console.log(err);

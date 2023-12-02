@@ -19,11 +19,10 @@ const ListingComponent = () => {
     price?: number;
     date?: number;
   }) => {
-    console.log("hi");
     setFilterData({
       ...filter,
       limit: 9,
-      sort,
+      sort ,
     });
   };
 

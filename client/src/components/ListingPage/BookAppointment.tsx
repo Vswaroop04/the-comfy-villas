@@ -69,7 +69,12 @@ export default function BookAppointment({
       });
       console.log(resp);
       setIsFetching(false);
-      toast.message(resp.message);
+      if (resp.message == "Appointment Booked Succesfully") {
+        toast.success(resp.message);  
+      }
+      else {
+        toast.error(resp.message)
+      }
       setOpen(false);
     } catch (err) {
       console.log(err);

@@ -1,3 +1,4 @@
+"use client"
 import httpClient from "../../../utils/httpClient";
 import SSRHeaders from "@/utils/ssrHeaders";
 import TListingFilter, {
@@ -6,6 +7,7 @@ import TListingFilter, {
   TListingFilterWithSearchText,
 } from "@/types/ListingFilter";
 import SSRreq from "@/types/SSRreq";
+import { toast } from "sonner";
 
 export default async function getFilteredListings(
   filter: TListingFilter,
@@ -17,6 +19,8 @@ export default async function getFilteredListings(
     totalListingsCount?: number;
   };
 }> {
+  toast.loading("Villas Are Loading");
+
   const allFilters = {
     filter,
     ...(returnFilter && { returnFilter }),

@@ -8,13 +8,13 @@ import ProductSkeletonCard from "@/components/Listings/ProductSkeletonCard";
 import CardComponent from "@/components/Home/CardComponent";
 import { useAtom } from "jotai";
 import Link from "next/link";
-import { useHydrateAtoms } from 'jotai/utils';
+import { useHydrateAtoms } from "jotai/utils";
 import { useIntersection } from "react-use";
 import HeaderListings from "@/components/Listings/HeaderListings";
 import SearchComponent from "@/components/Listings/SearchBar";
+import { toast } from "sonner";
 
 export default function Listings() {
-
   const [queryEnabled, setQueryEnabled] = useState(false);
   const [openLoadingState, setOpenLoadingState] = useState(false);
   const [filter, setFilterData] = useAtom(filterAtom);
@@ -34,6 +34,7 @@ export default function Listings() {
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
+
   } = useInfiniteQuery({
     queryKey: ["listings", filter],
     queryFn: ({ pageParam }) =>
@@ -51,6 +52,7 @@ export default function Listings() {
       return currentPage + 1;
     },
   });
+
 
   const intersectionRef = useRef(null);
 
@@ -78,7 +80,7 @@ export default function Listings() {
               page.data?.listings?.map((item) => (
                 <div className="m-1.5" key={item.id}>
                   <CardComponent
-                    id = {item.id}
+                    id={item.id}
                     title={item.name}
                     key={item.id}
                     rating={item.averageRating}
@@ -101,45 +103,19 @@ export default function Listings() {
           ))}
         </div>
       )}
-      {}
       {isLoading ? (
-        <div className="flex justify-center items-center">
-          <div>Loading...</div>
+        <div className="m-4 grid grid-cols-3 -mx-1.5 py-3">
+          {Array.from({ length: 10 })?.map((_, i) => (
+            <ProductSkeletonCard isOtherListing={true} key={i} />
+          ))}
         </div>
-      ) : listings?.pages[0]?.data?.listings?.length === 0 ? (
-        <div className="text-center">Deals not found</div>
-      ) : null}
+      ) : (
+        <></>
+      )}
 
       {/* Load More Button - Hidden but used to trigger infinite loading */}
+      <div></div>
       <div className="w-full flex" ref={intersectionRef}>
-        {listings && listings.pages[0]?.data?.listings?.length === 0 ? (
-          <p className="text-[#585757] font-Roboto-Semibold">
-            Deals not found.
-          </p>
-        ) : (
-          <>
-            {!isLoading && !isError && (
-              <span
-                className={`rounded-md shadow border m-auto border-[#707070] hover:drop-shadow-lg p-2 bg-m-white flex justify-center items-center hover:cursor-pointer mb-5 select-none active:scale-110 w-full mr-2`}
-                onClick={() => fetchNextPage()}
-              >
-                <p className="block text-[#585757] font-Roboto-Semibold">
-                  {isLoading || isFetchingNextPage ? (
-                    "Loading..."
-                  ) : listings &&
-                    listings.pages[0]?.data?.listings?.length === 0 ? (
-                    <p className="text-[#585757] font-Roboto-Semibold">
-                      Deals not found.
-                    </p>
-                  ) : (
-                    <>Load More </>
-                  )}
-                </p>
-              </span>
-            )}
-          </>
-        )}
-
         {isError && (
           <p className="text-red-500">Error loading deals. Please try again.</p>
         )}

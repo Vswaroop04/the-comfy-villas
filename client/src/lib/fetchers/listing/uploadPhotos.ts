@@ -13,6 +13,7 @@ export default async function uploadPhotos(formData: FormData): Promise<{
       body: formData,
       credentials: "include",
     }
+    
   );
   return response;
 }
