@@ -10,22 +10,42 @@ import {
   Plug,
   Bed,
   BathIcon,
+  TreesIcon,
+  ParkingCircleIcon,
+  ParkingCircle,
 } from "lucide-react";
 import EditDialog from "./EditDialog";
 import ReviewEditDialog from "./ReviewEditDialog";
 
 // OverviewRatingReview.js
 const OverviewRatingReview = ({ userData }: any) => {
-  const amenities = [
-    { name: "Pet-friendly", icon: PawPrint },
-    { name: "Free WiFi", icon: Wifi },
-    { name: "Bar", icon: Martini },
-    { name: "Pool", icon: Waves },
-    { name: "Restaurant", icon: Utensils },
-    { name: "Electric vehicle charging point", icon: Plug },
-    { name: `${userData?.listing?.beds} Beds`, icon: Bed },
-    { name: `${userData?.listing?.bathrooms} Bathrooms`, icon: BathIcon },
-  ];
+  console.log(userData);
+  const amenityIcons = {
+    "Pet-friendly": PawPrint,
+    "Free WiFi": Wifi,
+    Bar: Martini,
+    "Swimming Pool": Waves,
+    Restaurant: Utensils,
+    "Electric vehicle charging point": Plug,
+    Beds: Bed, // Assuming you handle the dynamic part of beds and bathrooms elsewhere
+    Bathrooms: BathIcon,
+    Parking: ParkingCircle,
+    Garden: TreesIcon,
+  };
+
+
+  type AmenityName = keyof typeof amenityIcons;
+
+function getIconForAmenity(amenityName: AmenityName) {
+  const IconComponent = amenityIcons[amenityName];
+  if (!IconComponent) {
+    console.warn(`No icon found for amenity: ${amenityName}`);
+    return null;
+  }
+  return <IconComponent className="w-6 h-6 text-gray-700" />;
+}
+
+
   // State to hold the editable ratings and review
   const [ratings, setRatings] = useState({
     amenitiesRatings: userData.ratings[0]?.amenitiesRatings || "",
@@ -68,12 +88,22 @@ const OverviewRatingReview = ({ userData }: any) => {
 
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <div className="grid grid-cols-2 gap-4">
-          {amenities.map((amenity, index) => (
+          {userData.listing.amenities?.map((amenity: any, index: any) => (
             <div key={index} className="flex items-center space-x-2">
-              <amenity.icon className="w-6 h-6 text-gray-700" />
-              <span className="text-gray-600">{amenity.name}</span>
+              {getIconForAmenity(amenity)}
+              <span className="text-gray-600">{amenity}</span>
             </div>
           ))}
+          <div className="flex items-center space-x-2">
+            {getIconForAmenity("Beds")}
+            <span className="text-gray-600">
+              {userData?.listing?.beds} Beds
+            </span>
+          </div>
+          <div  className="flex items-center space-x-2">
+            {getIconForAmenity("Bathrooms")}
+            <span className="text-gray-600"> {userData?.listing?.bathrooms} Bathrooms</span>
+          </div>
         </div>
       </div>
 
@@ -152,7 +182,12 @@ const OverviewRatingReview = ({ userData }: any) => {
       <div>
         <div className="flex justify-between">
           <h1 className="text-2xl  py-2 font-bold">Review</h1>
-          <button className="hover:scale-125" onClick={() => {setopenEditReviews(true)}}>
+          <button
+            className="hover:scale-125"
+            onClick={() => {
+              setopenEditReviews(true);
+            }}
+          >
             <Pencil />
           </button>
         </div>
