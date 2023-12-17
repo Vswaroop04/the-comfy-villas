@@ -39,8 +39,8 @@ Before getting started, ensure you have the following installed:
 - pnpm (for frontend, can be installed using `npm install -g pnpm`)
 
 ## Frontend Installation
-
 Navigate to the `frontend` directory and run the following commands:
+Create a .env file in the frontend directory with the help of .env.example
 
 ```bash
 # Install dependencies
@@ -56,6 +56,7 @@ pnpm run start
 ## Backend Installation
 
 Navigate to the `backend` directory and run the following commands:
+Create a .env file in the backend directory with the help of .env.example
 
 ```bash
 # Install dependencies
