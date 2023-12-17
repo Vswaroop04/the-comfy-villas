@@ -1,0 +1,38 @@
+# Use the official Node.js LTS (Long Term Support) image as the base image
+FROM node:14-alpine AS base
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and pnpm-lock.yaml to the working directory
+COPY package.json pnpm-lock.yaml ./
+
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
+
+# Create a separate development stage
+FROM base AS development
+
+# Copy all files to the working directory
+COPY . .
+
+# Expose the port on which the application will run
+EXPOSE 5000
+
+# Start the application in development mode
+CMD ["pnpm", "run", "dev"]
+
+# Create a separate production stage
+FROM base AS production
+
+# Build the project
+RUN pnpm run build
+
+# Expose the port on which the application will run
+EXPOSE 5000
+
+# Start the application in production mode
+CMD ["pnpm", "run", "start"]
